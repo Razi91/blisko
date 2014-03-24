@@ -48,6 +48,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+
 ROOT_URLCONF = 'Blisko.urls'
 
 WSGI_APPLICATION = 'Blisko.wsgi.application'
@@ -57,18 +58,18 @@ WSGI_APPLICATION = 'Blisko.wsgi.application'
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
 DATABASES = {
-    #'default': {
-    #    'ENGINE': 'django.db.backends.sqlite3',
-    #    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    #},
     'default': {
-        'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'blisko',
-        'USER': 'root',
-        'PASSWORD': 'mysql',
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
-    }
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+    #'default': {
+    #    'ENGINE': 'django.db.backends.mysql', 
+    #    'NAME': 'blisko',
+     #   'USER': 'root',
+    #    'PASSWORD': 'mysql',
+    #    'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+    #    'PORT': '3306',
+    #}
     #'default': {
     #    'ENGINE': 'django.db.backends.oracle',
     #    'NAME': 'xe',
@@ -82,7 +83,7 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pl-pl'
 
 TIME_ZONE = 'UTC'
 
@@ -92,6 +93,12 @@ USE_L10N = True
 
 USE_TZ = True
 
+
+MEDIA_ROOT = BASE_DIR + '/media/'
+
+TEMPLATE_DIRS = (
+    BASE_DIR + '/templates/'
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
