@@ -32,8 +32,24 @@
 				</p>
 			</nav>
 
+{% block content %}
+
+{% endblock %}
+
 			<div>
-				{{ test }}
+				<p>
+					{% if user %}
+					{{ user.login }}
+					{% endif %}
+				</p>
+
+				{% if test %}
+				<ul>
+					{% for question in test.questions %}
+					<li>{{ question }}</li>
+					{% endfor %}
+				</ul>
+				{% endif %}
 			</div>
 
 			<footer>

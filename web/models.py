@@ -41,7 +41,7 @@ class User(models.Model):
     
 class Group(models.Model):
     """
-    Klasa biorąca udział w kursie
+    Grupa biorąca udział w kursie
     """
     name = models.CharField(max_length=40)
     teacher = models.ForeignKey(User)
@@ -78,6 +78,8 @@ class Test(models.Model):
     points = models.IntegerField()
     attempts = models.IntegerField()
     course = models.ForeignKey(Course)
+    def questions(self):
+        return Question.objects.filter(test=self)
     def done_by_user(self, user):
         if Result.objects.filter(user=user).count() > 0: 
             return True
@@ -172,8 +174,21 @@ class Activity(models.Model):
     user = models.ForeignKey(User)
     date = models.DateTimeField(auto_now=True)
     activityid = models.IntegerField()
+    ipv4 = models.IntegerField()
     type = models.CharField(max_length=2, choices=ACTIVITY_TYPE, default=UNKNOWN)
     class Meta:
         db_table = "Activity"
     
+"""
+Notatki jkonieczny
+
+SELECTy dla testu + pytania + odpowiedzi
+
+    SELECT * FROM Question WHERE test = id_testu
+    
+    SELECT * FROM Answer WHERE question = id_question
+
+
+"""
+
 
