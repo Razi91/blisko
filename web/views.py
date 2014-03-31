@@ -14,7 +14,7 @@ def require(request, right):
     """
     pass
 
-def User(request):
+def user(request):
     """
         Zwraca zalogowanego użytkownika lub None
     """
@@ -35,3 +35,31 @@ def get(request):
 def main(request):
     map = get(request)
     return render_to_response('main.html', map)
+
+def tests(request):
+    """
+        Lista dostępnych testów
+    """
+    map = get(request)
+    group = user(request).groups()
+    tests = Test.objects.all().filter(course = group.course)
+    return render_to_response('main.html', map)
+
+
+def test(request, id):
+    """
+        Szczegóły testu
+    """
+    map = get(request)
+    group = user(request).groups()
+    test = Test.objects.all().filter(id = id)[0]
+    test.is_available_for_user(user)
+    return render_to_response('main.html', map)
+
+
+
+
+
+
+
+

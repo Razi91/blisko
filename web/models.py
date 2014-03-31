@@ -84,6 +84,8 @@ class Test(models.Model):
         if Result.objects.filter(user=user).count() > 0: 
             return True
         return False
+    def is_available_for_user(self, user):
+        pass
     class Meta:
         db_table = "Test"
         
@@ -147,6 +149,14 @@ class Answer(models.Model):
         return ans == correct
     class Meta:
         db_table = "Answer"
+        
+class OpenAnswer(models.Model):
+    user = models.ForeignKey(User)
+    question = models.ForeignKey(Question)
+    sesid = models.IntegerField()
+    points = models.IntegerField(default = -1)
+    class Meta:
+        db_table = "OpenAnswer"
     
     
 class Result(models.Model):
