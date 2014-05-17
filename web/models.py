@@ -33,18 +33,18 @@ class User(models.Model):
         return groups
         
     
-    def is_student_of(self, group):
-        """
-            Użytkownik jest uczniem grupy
-        """
-        list = Students.objects.filter(group=group, user=self)
-        return list.count()>0
+#     def is_student_of(self, group):
+#         """
+#             Użytkownik jest uczniem grupy
+#         """
+#         list = Students.objects.filter(group=group, user=self)
+#         return list.count()>0
     
-    def is_teacher_of(self, group):
-        """
-            Użytkownik jest nauczycielem grupy
-        """
-        return group.teacher == self
+#     def is_teacher_of(self, group):
+#         """
+#             Użytkownik jest nauczycielem grupy
+#         """
+#         return group.teacher == self
     
     def is_doing_test(self):
         """
@@ -66,9 +66,10 @@ class User(models.Model):
         """
         if self.is_doing_test() or self.is_watching_lesson(): return None
         tests = []
-        for group in self.groups():
-            tg = Test.objects.filter(course=group.course)
-            tests.append(tg)
+#         for group in self.groups():
+#             tg = Test.objects.filter(course=group.course)
+#             tests.append(tg)
+        #TODO: pobrać testy
         return tests
         
     def available_lessons(self):
@@ -287,17 +288,4 @@ class Activity(models.Model):
     
     class Meta:
         db_table = "Activity"
-    
-"""
-Notatki jkonieczny
-
-    SELECTy dla testu + pytania + odpowiedzi
-
-    SELECT * FROM Question WHERE test = id_testu
-    
-    SELECT * FROM Answer WHERE question = id_question
-
-
-"""
-
 
