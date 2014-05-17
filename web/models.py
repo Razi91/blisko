@@ -5,7 +5,7 @@ import random
 
 class AccountPrivilages(models.Model):
     """
-    Definiuje przywileje konta
+        Definiuje przywileje konta
     """
     name = models.CharField(max_length=40)
     level = models.IntegerField()
@@ -15,54 +15,117 @@ class AccountPrivilages(models.Model):
 
 class User(models.Model):
     """
-    Model użytkownika
+        Model użytkownika
     """
     login = models.CharField(max_length=30)
     password = models.CharField(max_length=128)
     privilages = models.ForeignKey(AccountPrivilages)
     enabled = models.BooleanField()
     
+    def groups(self):
+        """
+            Grupy do których należy student
+        """
+        lst = Students.objects.filter(user=self)
+        groups = []
+        for l in lst:
+            groups.append(l.group)
+        return groups
+        
+    
+    def is_student_of(self, group):
+        """
+            Użytkownik jest uczniem grupy
+        """
+        list = Students.objects.filter(group=group, user=self)
+        return list.count()>0
+    
+    def is_teacher_of(self, group):
+        """
+            Użytkownik jest nauczycielem grupy
+        """
+        return group.teacher == self
+    
+    def is_doing_test(self):
+        """
+            Wykonuje obecnie test
+            TODO
+        """
+        return False
+    
+    def is_watching_lesson(self):
+        """
+            Ogląda lekcje
+            TODO
+        """
+        return False
+    
+    def available_tests(self):
+        """
+            Dostępne testy
+        """
+        if self.is_doing_test() or self.is_watching_lesson(): return None
+        tests = []
+        for group in self.groups():
+            tg = Test.objects.filter(course=group.course)
+            tests.append(tg)
+        return tests
+        
+    def available_lessons(self):
+        """
+            Dostępne lekcje do obejrzenia
+        """
+        if self.is_doing_test(): return None
+        #TODO
+        return []
+    
     def set_password(self, raw_password):
         algo = 'sha1'
         salt = get_hexdigest(algo, str(random.random()), str(random.random()))[:5]
         hsh = get_hexdigest(algo, salt, raw_password)
         self.password = '%s$%s$%s' % (algo, salt, hsh)
+        
     def check_password(self, raw_password):
         algo = 'sha1'
         salt = get_hexdigest(algo, str(random.random()), str(random.random()))[:5]
         hsh = get_hexdigest(algo, salt, raw_password)
         password = '%s$%s$%s' % (algo, salt, hsh)
         return password == self.password
+    
     def _str_(self):
         return person.name
+    
     class Meta:
         db_table = "User"
-    
-    
-class Group(models.Model):
-    """
-    Grupa biorąca udział w kursie
-    """
-    name = models.CharField(max_length=40)
-    teacher = models.ForeignKey(User)
-    # students = models.ManyToManyField(User, through='Students')
-    class Meta:
-        db_table = "Group"
-    
-    
-class Students(models.Model):
-    user = models.ForeignKey(User)
-    group = models.ForeignKey(Group)
-    joined = models.DateTimeField()
-    class Meta:
-        db_table = "Students"
-    
     
 class Course(models.Model):
     name = models.CharField(max_length=40)
     level = models.IntegerField()
+    cost = models.IntegerField()
     class Meta:
         db_table = "Course"
+
+
+class Group(models.Model):
+    """
+        Grupa biorąca udział w kursie
+    """
+    name = models.CharField(max_length=40)
+    teacher = models.ForeignKey(User)
+    course = models.ForeignKey(Course)
+    # students = models.ManyToManyField(User, through='Students')
+    class Meta:
+        db_table = "Group"
+        
+class CourceAccess(models.Model):
+    """
+        Dostęp użytkownika do kursu
+    """
+    user = models.ForeignKey(User)
+    course = models.ForeignKey(Course)
+    date = models.DateField()
+    class Meta:
+        db_table = "CourseAccess"
     
     
 class Lesson(models.Model):
@@ -78,14 +141,43 @@ class Test(models.Model):
     points = models.IntegerField()
     attempts = models.IntegerField()
     course = models.ForeignKey(Course)
+    
+    fromJson = False
+    parsedQuestions = []
+    
     def questions(self):
         return Question.objects.filter(test=self)
+    
+    def parse(self, json):
+        """
+            Generuje strukturę z odpowiedziami z JSona
+        """
+        fromJson = True
+        pass
+    
+    def points(self):
+        """
+            Punkty zdobyte
+        """
+        if not fromJson: return
+        pts = 0
+        for question in parsedQuestions:
+            pts += question.pts
+        return pts
+    
     def done_by_user(self, user):
+        """
+            Test wykonany już przez użytkownika
+        """
         if Result.objects.filter(user=user).count() > 0: 
             return True
         return False
+    
     def is_available_for_user(self, user):
+        """
+        """
         pass
+    
     class Meta:
         db_table = "Test"
         
@@ -109,11 +201,13 @@ class Question(models.Model):
     content = models.TextField()
     type = models.CharField(max_length=1, choices=TYPE, default=CLOSED_ONE)
     points = models.IntegerField()
+    
     class Meta:
         db_table = "Question"
     
     def no_error(self):
         if type == OPEN:
+            return True
             return True
         list = Answer.objects.get(question=self)
         correct = 0
@@ -145,8 +239,10 @@ class Answer(models.Model):
     text = models.TextField()
     image = models.TextField()
     correct = models.BooleanField()
+    
     def is_correct(self, ans):
         return ans == correct
+    
     class Meta:
         db_table = "Answer"
         
@@ -155,6 +251,7 @@ class OpenAnswer(models.Model):
     question = models.ForeignKey(Question)
     sesid = models.IntegerField()
     points = models.IntegerField(default = -1)
+    
     class Meta:
         db_table = "OpenAnswer"
     
@@ -165,6 +262,7 @@ class Result(models.Model):
     percent = models.FloatField()
     user = models.ForeignKey(User)
     test = models.ForeignKey(Test)
+    
     class Meta:
         db_table = "Result"
     
@@ -186,13 +284,14 @@ class Activity(models.Model):
     activityid = models.IntegerField()
     ipv4 = models.IntegerField()
     type = models.CharField(max_length=2, choices=ACTIVITY_TYPE, default=UNKNOWN)
+    
     class Meta:
         db_table = "Activity"
     
 """
 Notatki jkonieczny
 
-SELECTy dla testu + pytania + odpowiedzi
+    SELECTy dla testu + pytania + odpowiedzi
 
     SELECT * FROM Question WHERE test = id_testu
     
