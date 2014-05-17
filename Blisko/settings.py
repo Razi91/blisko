@@ -56,7 +56,7 @@ WSGI_APPLICATION = 'Blisko.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-db = "mysql"
+db = "sqlite"
 
 if db == "sqlite":
   DATABASES = {
