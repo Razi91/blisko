@@ -8,28 +8,29 @@ from django.shortcuts import render_to_response
 USER = 1
 TEACHER = 2
 
-def require(request, right):
-    """
-        Sprawdza prawa do widoku, podnosi 404 lub 500 w przypadku błędu
-    """
-    pass
-
 def user(request):
     """
         Zwraca zalogowanego użytkownika lub None
     """
-    pass
+    user = User.objects.get(request.session['user'])
+    return user
 
 def get(request):
     """
         Ogólna mapa do użytku w szablonach
     """
     map = {}
+    map['user'] = user(request)
     return map
 
 
 
+def login(request):
+    pass
 
+def logout(request):
+    request.session['user'] = None
+    pass
 
 
 def main(request):

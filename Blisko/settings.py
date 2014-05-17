@@ -56,29 +56,37 @@ WSGI_APPLICATION = 'Blisko.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
+db = "mysql"
 
-DATABASES = {
+if db == "sqlite":
+  DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    },
-    #'default': {
-    #    'ENGINE': 'django.db.backends.mysql', 
-    #    'NAME': 'blisko',
-     #   'USER': 'root',
-    #    'PASSWORD': 'mysql',
-    #    'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-    #    'PORT': '3306',
-    #}
-    #'default': {
-    #    'ENGINE': 'django.db.backends.oracle',
-    #    'NAME': 'xe',
-    #    'USER': 'a_user',
-    #    'PASSWORD': 'a_password',
-    #    'HOST': 'dbprod01ned.mycompany.com',
-    #    'PORT': '1540',
-    #}
-}
+    }
+  }
+elif db == "mysql":   
+  DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql', 
+        'NAME': 'blisko',
+        'USER': 'root',
+        'PASSWORD': 'mysql',
+        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        'PORT': '3306',
+    }
+  }
+elif db == "oracle":   
+    DATABASES = {
+      'default': {
+        'ENGINE': 'django.db.backends.oracle',
+        'NAME': 'xe',
+        'USER': 'a_user',
+        'PASSWORD': 'a_password',
+        'HOST': 'dbprod01ned.mycompany.com',
+        'PORT': '1540',
+    }
+  }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
