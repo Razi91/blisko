@@ -37,7 +37,7 @@ class User(models.Model):
         """
             Użytkownik jest uczniem grupy
         """
-        list = Students.objects.filter(group=group, user=self)
+        list = Students.objects.filter(group=group, user=self) 
         return list.count()>0
     
     def is_teacher_of(self, group):

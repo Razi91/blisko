@@ -1,2 +1,4 @@
 Blisko Academy
 ==============
+
+praca zespołowa
