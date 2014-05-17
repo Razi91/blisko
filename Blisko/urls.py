@@ -10,6 +10,5 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.main),
-    url(r'^tests/', views.tests),
-    url(r'^test/(+d)', views.test)
+    url(r'^tests/', views.tests)
 )

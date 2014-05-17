@@ -1,62 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
+<head>
+    <meta charset="utf-8">
+    <title>Akademia Blisko</title>
+    <meta name="description" content="">
+    <meta name="author" content="Jakub Konieczny, Artur Fonfara">
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
 
-		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
-		Remove this if you use the .htaccess -->
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<body>
+<div>
+    <header>
+        <h1>main</h1>
+    </header>
+    <nav>
+        <ul>
+            <li>
+                <a href="/">Strona główna</a>
+            </li>
+            <li>
+                <a href="/kursy">Przeglądaj kursy</a>
+            </li>
+            {% if user.is_logged %}
+                <li>
+                    <a href="/twojekursy">Twoje kursy</a>
+                </li>
+                <li>
+                    <a href="/wyloguj">Wyloguj</a>
+                </li>
+                {% else %}
+                <li>
+                    <a href="/rejestruj">Rejestruj</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
 
-		<title>main</title>
-		<meta name="description" content="">
-		<meta name="author" content="Jakub Konieczny">
+    {% block content %}
+<h1>Strona główna</h1>
+        <p><em>Akademia Blisko</em> to system e-learningowy który pozwoli Ci zdobywać wiedzę nie wychodząc z domu!</p>
 
-		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+        <h2>PROMOCJA!</h2>
+        <p>Dołącz do społeczności! Tylko do końca czerwca za samą rejestrację otrzymasz 100 kredytów za darmo!</p>
+    {% endblock %}
 
-		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
-		<link rel="shortcut icon" href="/favicon.ico">
-		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-	</head>
-
-	<body>
-		<div>
-			<header>
-				<h1>main</h1>
-			</header>
-			<nav>
-				<p>
-					<a href="/">Home</a>
-				</p>
-				<p>
-					<a href="/contact">Contact</a>
-				</p>
-			</nav>
-
-{% block content %}
-
-{% endblock %}
-
-			<div>
-				<p>
-					{% if user %}
-					{{ user.login }}
-					{% endif %}
-				</p>
-
-				{% if test %}
-				<ul>
-					{% for question in test.questions %}
-					<li>{{ question }}</li>
-					{% endfor %}
-				</ul>
-				{% endif %}
-			</div>
-
-			<footer>
-				<p>
-					&copy; Copyright  by Jakub Konieczny
-				</p>
-			</footer>
-		</div>
-	</body>
+    <footer>
+        <p>
+            &copy; Copyright by Jakub Konieczny
+        </p>
+    </footer>
+</div>
+</body>
 </html>

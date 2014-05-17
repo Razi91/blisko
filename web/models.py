@@ -20,8 +20,12 @@ class User(models.Model):
     login = models.CharField(max_length=30)
     password = models.CharField(max_length=128)
     privilages = models.ForeignKey(AccountPrivilages)
-    enabled = models.BooleanField()
-    
+    enabled = models.BooleanField(default=0)
+    credits = models.IntegerField(default=0)
+
+    def is_logged(self):
+        return self.id != 0
+
     def groups(self):
         """
             Grupy do których należy student
@@ -98,7 +102,7 @@ class User(models.Model):
     
     class Meta:
         db_table = "User"
-    
+
 class Course(models.Model):
     name = models.CharField(max_length=40)
     level = models.IntegerField()

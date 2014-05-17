@@ -1,0 +1,12 @@
+body{
+    background: rgb(255,255,255);
+}
+
+nav ul{
+    list-style: none;
+    display: inline-block;
+}
+
+nav ul li{
+    display: block;
+}

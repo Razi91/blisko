@@ -1,21 +1,23 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpRequest
 from django.template import Context, Template
 from django.shortcuts import render_to_response
+from web.models import *
 # Create your views here.
 
 
 USER = 1
 TEACHER = 2
 
-def user(request):
+def user(request: HttpRequest):
     """
         Zwraca zalogowanego użytkownika lub None
     """
-    user = User.objects.get(request.session['user'])
+    id = request.session.get('user', 0)
+    user = User.objects.get(id=id)
     return user
 
-def get(request):
+def get(request: HttpRequest):
     """
         Ogólna mapa do użytku w szablonach
     """
@@ -25,15 +27,15 @@ def get(request):
 
 
 
-def login(request):
+def login(request: HttpRequest):
     pass
 
-def logout(request):
+def logout(request: HttpRequest):
     request.session['user'] = None
     pass
 
 
-def main(request):
+def main(request: HttpRequest):
     map = get(request)
     return render_to_response('main.html', map)
 
@@ -43,7 +45,7 @@ def tests(request):
     """
     map = get(request)
     group = user(request).groups()
-    tests = Test.objects.all().filter(course = group.course)
+    #tests = Test.objects.all().filter(course = group.course)
     return render_to_response('main.html', map)
 
 
