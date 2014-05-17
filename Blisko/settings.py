@@ -110,5 +110,10 @@ TEMPLATE_DIRS = (
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+    '/var/www/static/',
+)
 
 STATIC_URL = '/static/'
+STATIC_ROOT = "/home/jacob/projects/mysite.com/sitestatic"
