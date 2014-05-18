@@ -1,0 +1,19 @@
+{
+    "title": "Pierwszy sprawdzian",
+    "questions": [
+        {
+            "question": "Jakie jest rozwinięcie nazwy JSONa?",
+            "correct": ["JavaScript Object Notation"],
+            "false": ["Java Standard Object Notation",
+                "JavaScript Object Notifer",
+                "Java Sample Object Negation"]
+        },
+        {
+            "question": "Jakie jest rozwinięcie nazwy JSONa?",
+            "correct": ["JavaScript Object Notation"],
+            "false": ["Java Standard Object Notation",
+                "JavaScript Object Notifer",
+                "Java Sample Object Negation"]
+        }
+    ]
+}
