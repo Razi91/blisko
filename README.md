@@ -16,3 +16,5 @@ i uruchomić:
 from Blisko.install import *
 install_basic()
 ```
+
+Zalecana baza danych to SQLite w celach testowych.
