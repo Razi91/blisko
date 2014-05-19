@@ -11,9 +11,9 @@
         {
             "question": "Jak nazywa się protokół zdalnego wywoływania procedur, który jako dane transportowe wykorzystuje obiekty JSON-a?",
             "correct": ["JSON-RPC"],
-            "false": ["IRC",
+            "false": ["NNTP",
                 "node.js",
-                "NNTP"]
+                "IRC"]
         },
         {
             "question": "Web 2.0 to:",
