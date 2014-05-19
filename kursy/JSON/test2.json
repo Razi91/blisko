@@ -16,7 +16,7 @@
                 "dumps(data)"]
         }
         {
-            "question": "Jaie dane można przechowywać za pomocą JSON?",
+            "question": "Jakie dane można przechowywać za pomocą JSON?",
             "correct": ["Tekst i liczby"],
             "false": ["Tylko tekst",
                 "Tylko liczby",
