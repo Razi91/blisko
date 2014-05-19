@@ -15,3 +15,9 @@ def install_basic():
     user.login = "Niezalogowany"
     user.privilages_id = 0
     user.save()
+
+def install_tests():
+    """
+    Instalacja kursów
+    """
+    pass

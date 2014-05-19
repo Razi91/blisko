@@ -1,0 +1,29 @@
+{
+    "title" : "Kurs JSON",
+    "short" : "Kurs obsługi JSONa",
+    "long" : "W tym kursie nauczyzsfsdd"
+    "lessons" : [
+        {
+            "title" : "Tytuł lekcji",
+            "id" : 1,
+            "file" : "lesson1.html"
+        },{
+            "title" : "Tytuł lekcji 2",
+            "id" : 2,
+            "file" : "lesson2.html"
+        }
+    ]
+    "tests" : [
+        {
+            id=3
+            "file" : "test1.json"
+        },
+        {
+            id=4
+            "file" : "test2.json"
+        }
+    ]
+    "list" : [
+        1, 3, 2, 4
+    ]
+}
