@@ -1,0 +1,126 @@
+
+
+/******************************************************************************/
+/*                             ELEMENTY - KOLORY                              */
+/******************************************************************************/
+
+.formy p {
+	padding:0;
+	margin:2px 0; }
+.formy p span {
+  display:inline-block;
+  padding:3px;
+  background:#fff;
+  border:1px solid #bbb;
+  border-radius:4px; }
+.formy p span.validate_bad input,
+.formy p span.validate_bad select,
+.formy p span.validate_bad textarea {
+  border-bottom:1px solid #f22 !important; }
+.formy p label {
+  color:#333; }
+.formy p.formy_radio_title em,
+.formy p label em {
+  display:inline;
+  border:0;
+  color:#f00; }
+.formy p input,
+.formy p select,
+.formy p textarea {
+  background:transparent;
+  margin:0;
+  padding:0; 
+  border:0;
+  color:#333333; }
+.formy fieldset {
+  margin:20px 0;
+  border:0; }
+.formy fieldset legend {
+	font-weight:bold; }
+.formy p.formy_button_p input {
+  border:1px solid #ccc; }
+
+.formy p {
+  padding:5px 0; }
+.formy p label,
+.formy p input,
+.formy p textarea,
+.formy p select {
+  display:inline-block; 
+  vertical-align:middle; }
+.formy p.formy_text_p label,
+.formy p.formy_password_p label {
+	padding:5px;
+  width:120px; }
+.formy p.formy_text_p input, 
+.formy p.formy_password_p input {
+  width:250px; }
+.formy p.formy_textarea_p label {
+  vertical-align:top;
+  padding:5px;
+  width:120px; }
+.formy p.formy_textarea_p textarea {
+  width:400px; 
+  height:150px; }
+.formy p.formy_checkbox_p {
+  white-space:nowrap; }
+.formy p.formy_checkbox_p input {
+  border:0; }
+.formy p.formy_checkbox_p label {
+  display:inline-block;
+  width:90%;
+  white-space:normal }
+.formy p.formy_checkbox_p label.validate_bad {
+	font-weight:bold;
+	color:#f22; }
+.formy p.formy_radio_title {
+  padding-bottom:5px; }
+.formy p.formy_radio_p {
+  padding-top:5px; 
+  white-space:nowrap; }
+.formy p.formy_radio_p input {
+  border:0; }
+.formy p.formy_radio_p label {
+  width:250px;
+  white-space:normal }
+.formy p.formy_select_p label {
+	padding:5px;
+  width:120px; }
+.formy p.formy_select_p select {
+  width:250px; }
+.formy p.formy_image_p input {
+  border:0; }
+.formy p.formy_kalendarz_p label {
+	padding:5px;
+  width:120px; }
+.formy p.formy_kalendarz_p input {
+  width:250px;
+  cursor:pointer;
+  background-position:100% 50%;
+  background-repeat:no-repeat;
+  background-image:url('../images/famfamfam_silk/calendar.png'); }
+.formy p.formy_file_p label {
+	padding:5px;
+  width:120px; }
+.formy p.formy_submit_p {
+	width:210px;
+  text-align:right; }
+.formy p.formy_hidden_p,
+.formy p.formy_hidden_p input {
+  display:none; }
+
+.formy .formy_recaptcha {
+  padding-left:154px; }
+.formy .formy_recaptcha .recaptcha_error {
+  color:#f22; }
+
+.formy p.formy_submit_p input {
+  width:80px;
+  height:25px;
+  line-height:22px; 
+  font-weight:bold;
+  color:#333;
+  background:#ccc;
+  border:1px solid #bbb;
+  border-radius:4px;
+  cursor:pointer; }
