@@ -1,4 +1,6 @@
 *.class
 *.pyc
 *.pyo
+.idea/*
+.settings/*
 db.sqlite3

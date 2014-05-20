@@ -105,6 +105,8 @@ class User(models.Model):
 
 class Course(models.Model):
     name = models.CharField(max_length=40)
+    short = models.CharField(max_length=40)
+    long = models.TextField()
     level = models.IntegerField()
     cost = models.IntegerField()
     class Meta:
@@ -144,7 +146,7 @@ class Lesson(models.Model):
 class Test(models.Model):
     name = models.CharField(max_length=40)
     points = models.IntegerField()
-    attempts = models.IntegerField()
+    #attempts = models.IntegerField()
     course = models.ForeignKey(Course)
     
     fromJson = False
@@ -242,7 +244,7 @@ class Question(models.Model):
 class Answer(models.Model):
     question = models.ForeignKey(Question)
     text = models.TextField()
-    image = models.TextField()
+    #image = models.TextField()
     correct = models.BooleanField()
     
     def is_correct(self, ans):
