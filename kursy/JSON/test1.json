@@ -9,11 +9,18 @@
                 "Java Sample Object Negation"]
         },
         {
-            "question": "Jakie jest rozwinięcie nazwy JSONa?",
-            "correct": ["JavaScript Object Notation"],
-            "false": ["Java Standard Object Notation",
-                "JavaScript Object Notifer",
-                "Java Sample Object Negation"]
+            "question": "Jak nazywa się protokół zdalnego wywoływania procedur, który jako dane transportowe wykorzystuje obiekty JSON-a?",
+            "correct": ["JSON-RPC"],
+            "false": ["NNTP",
+                "node.js",
+                "IRC"]
+        },
+        {
+            "question": "Web 2.0 to:",
+            "correct": ["Potoczne określenie dynamicznych serwisów internetowych opartych o treści użytkowników"],
+            "false": ["Nowa wersja World Wide Web",
+                "Rozszerzenie internetu o dodatkowe protokoły do szybszego przesyłania mediów",
+                "Żadne z powyższych"]
         }
     ]
 }

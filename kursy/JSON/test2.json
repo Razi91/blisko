@@ -1,0 +1,26 @@
+{
+    "title": "Drugi sprawdzian",
+    "questions": [
+        {
+            "question": "W jakim przykładowym programie możemy sprawdzić, czy dana strona używa JSONa do~komunikacji",
+            "correct": ["Wireshark"],
+            "false": ["HTTrack Website",
+                "Total Commander",
+                "URLNotifier"]
+        },
+        {
+            "question": "Serializując obiekt do JSONa w JavaScript której funkcji biblioteki JSON używamy?",
+            "correct": ["stringify(data)"],
+            "false": ["loads(data)",
+                "write(data)",
+                "dumps(data)"]
+        },
+        {
+            "question": "Jakie dane można przechowywać za pomocą JSON?",
+            "correct": ["Tekst i liczby"],
+            "false": ["Tylko tekst",
+                "Tylko liczby",
+                "Pojedyncze znaki ASCII zapisane w tabelach"]
+        }
+    ]
+}

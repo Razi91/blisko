@@ -15,6 +15,10 @@ i uruchomić:
 ```Python
 from Blisko.install import *
 install_basic()
+install_tests()
 ```
+Jeśli baza już była stworzona, należy ją usunąć przed synchronizacją.
+Zaleca się stosować login i hasło admina: `admin`.
+
 
 Zalecana baza danych to SQLite w celach testowych.

@@ -1,29 +1,30 @@
 {
     "title" : "Kurs JSON",
     "short" : "Kurs obsługi JSONa",
-    "long" : "W tym kursie nauczyzsfsdd"
+    "long" : "W tym kursie nauczyzsfsdd",
     "lessons" : [
         {
-            "title" : "Tytuł lekcji",
+            "title" : "Zagadnienia teoretyczne",
             "id" : 1,
             "file" : "lesson1.html"
-        },{
-            "title" : "Tytuł lekcji 2",
+        },
+        {
+            "title" : "Wykorzystanie",
             "id" : 2,
             "file" : "lesson2.html"
         }
-    ]
+    ],
     "tests" : [
         {
-            id=3
+            "id": 10,
             "file" : "test1.json"
         },
         {
-            id=4
+            "id" : 20,
             "file" : "test2.json"
         }
-    ]
+    ],
     "list" : [
-        1, 3, 2, 4
+        1, 10, 2, 20
     ]
 }
