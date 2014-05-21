@@ -5,6 +5,7 @@ __author__ = 'jkonieczny'
 """
 
 from web.models import *
+from Blisko import settings
 import json
 
 def install_basic():
@@ -23,34 +24,38 @@ def install_tests():
     """
     kursy = ["JSON"]
     for kurs in kursy:
-        dir = BASE_DIR+"/kursy/"+kurs+"/"
+        dir = settings.BASE_DIR+"/kursy/"+kurs+"/"
         with open(dir+"data.json") as data:
             course = Course()
             data = json.loads(data.read())
             course.name = data['title']
             course.short = data['short']
             course.long = data['long']
-            course.save()
+            course.cost = 50
+            course.level = 1
             #objs = []
+            course.save()
             for lesson in data['lessons']:
                 les = Lesson()
                 les.name = data['title']
                 with open(dir+"/"+lesson['file']) as content:
                     les.content = content.read()
                 les.course = course
-                #objs.append(les)
                 les.save()
             for test in data['tests']:
                 t = Test()
-                t.points = len(len(ts['questions']))
                 with open(dir+"/"+test['file']) as ts:
-                    ts = json.loads(ts)
+                    ts = json.loads(ts.read())
                     t.name = ts['title']
+                    t.points = len(ts['questions'])
+                    t.course = course
+                    t.save()
                     for question in ts['questions']:
                         quest = Question()
                         quest.type = Question.CLOSED_BINARY
                         quest.test = t
-                        question.content =  question['question']
+                        quest.content = question['question']
+                        quest.save()
                         for ans in question['correct']:
                             a = Answer()
                             a.question = quest
@@ -64,5 +69,5 @@ def install_tests():
                             a.text = ans
                             a.save()
                     t.course = course
-                    t.save()
+            #course
     pass

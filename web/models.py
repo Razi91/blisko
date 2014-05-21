@@ -137,7 +137,7 @@ class CourceAccess(models.Model):
     
 class Lesson(models.Model):
     name = models.CharField(max_length=40)
-    content = models.BinaryField()
+    content = models.TextField()
     course = models.ForeignKey(Course)
     class Meta:
         db_table = "Lesson"

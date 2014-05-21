@@ -14,7 +14,7 @@
             "false": ["loads(data)",
                 "write(data)",
                 "dumps(data)"]
-        }
+        },
         {
             "question": "Jakie dane można przechowywać za pomocą JSON?",
             "correct": ["Tekst i liczby"],
