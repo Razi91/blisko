@@ -17,7 +17,7 @@
         },
         {
             "question": "Wykorzystanie metody getContext() umożliwia:",
-            "correct": ["Wywoływanie funkcji rysujących."],
+            "correct": ["Wywoływanie funkcji rysujących"],
             "false": ["Ustalenia wymiarów płótna",
                 "Stworzenie nowego okna do rysowania",
                 "Zdefiniowanie nowego płótna"]
