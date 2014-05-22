@@ -11,5 +11,6 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.main),
-    url(r'^tests/', views.tests)
+    url(r'^tests/', views.tests),
+    url(r'^kursy$', views.kursy)
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

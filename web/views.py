@@ -37,7 +37,8 @@ def logout(request: HttpRequest):
 
 def main(request: HttpRequest):
     map = get(request)
-    return render_to_response('main.html', map)
+    map['courses'] = Courses.objects.all()
+    return render_to_response('courses_list.html', map)
 
 def tests(request):
     """
