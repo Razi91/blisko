@@ -1,0 +1,26 @@
+{
+    "title": "Trzeci sprawdzian",
+    "questions": [
+        {
+            "question": "Jakim znakiem zaczynamy opis obiektu w formacie JSON?",
+            "correct": ["{"],
+            "false": ["/",
+                ":",
+                "["]
+        },
+        {
+            "question": "Który z przykładów jest poprawną składnia formatu JSON?",
+            "correct": ["firstName": "Stefan"],
+            "false": ["<firstName>Stefan",
+                "firstName: Stefan",
+                "<firstName>Stefan</firstName>]
+        },
+        {
+            "question": "Jak dokonujemy analizy składniowej danych w formacie JSON?",
+            "correct": ["parse()"],
+            "false": ["get()",
+                "update()",
+                "read()"]
+        }
+    ]
+}
