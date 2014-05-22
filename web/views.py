@@ -34,11 +34,18 @@ def logout(request: HttpRequest):
     request.session['user'] = None
     pass
 
-
 def main(request: HttpRequest):
     map = get(request)
+    return render_to_response('main.html', map)
+
+def kursy(request: HttpRequest):
+    map = get(request)
     map['courses'] = Course.objects.all()
-    return render_to_response('courses_list.html', map) #http://i.imgur.com/xVyoSl.jpg
+    return render_to_response('courses_list.html', map)
+
+def lessons(request: HttpRequest):
+    map = get(request)
+    return render_to_response('lessons.html', map)
 
 def tests(request):
     """
