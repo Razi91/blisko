@@ -1,0 +1,18 @@
+{% extends "main.html" %}
+
+{% block title %}Blisko &mdash; Kursy{% endblock %}
+
+{% block content %}
+    <table>
+        <tr>
+            <th>Kurs</th>
+            <th>Cena</th>
+        </tr>
+        {% for course in courses %}
+            <tr>
+                <td>{{ course.name }}</td>
+                <td>{{ course.cost }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
