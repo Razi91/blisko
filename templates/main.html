@@ -1,56 +1,108 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Akademia Blisko</title>
-    <meta name="description" content="">
-    <meta name="author" content="Jakub Konieczny, Artur Fonfara">
-    <link rel="stylesheet" type="text/css" href="/static/style.css">
-</head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Akademia Blisko {% block title %}{% endblock %}</title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <link href="static/default.css" rel="stylesheet" type="text/css"/>
+</head>
 <body>
-<div>
-    <header>
-        <h1>main</h1>
-    </header>
-    <nav>
+<!-- start header -->
+<div id="header">
+    <div id="logo">
+        <h1><a href="#">Akademia Blisko</a></h1>
+
+        <h2>E-learning</h2>
+    </div>
+    <div id="menu">
         <ul>
-            <li>
-                <a href="/">Strona główna</a>
-            </li>
-            <li>
-                <a href="/kursy">Przeglądaj kursy</a>
-            </li>
-            {% if user.is_logged %}
-                <li>
-                    <a href="/twojekursy">Twoje kursy</a>
-                </li>
-                <li>
-                    <a href="/wyloguj">Wyloguj</a>
-                </li>
-            {% else %}
-                <li>
-                    <a href="/rejestruj">Rejestruj</a>
+            <li><a href="main.html">Strona główna</a></li>
+            <li><a href="szablony/kursy.html">Przeglądaj kursy</a></li>
+            <li><a href="xx.html">fbfgbf</a></li>
+            <li><a href="xx.html">Ofgbfgb</a></li>
+            <li><a href="szablony/kontakt.html">Kontakt</a></li>
+        </ul>
+    </div>
+</div>
+<!-- end header -->
+<!-- start page -->
+<div id="page">
+    <!-- start content -->
+    <div id="content">
+        {% block content %}
+        <div class="post">
+            <h2 class="title">Akademia Blisko</h2>
+
+            <div class="entry">
+                <p>Akademia Blisko to system e-learningowy który pozwoli Ci zdobywać wiedzę nie wychodząc z domu!</p>
+            </div>
+        </div>
+        <div class="post">
+            <h2 class="title"><strong>PROMOCJA!</strong></h2>
+
+            <div class="entry">
+                <p>Dołącz do społeczności! Tylko do końca czerwca za samą rejestrację otrzymasz 100 kredytów za
+                    darmo!</p>
+            </div>
+            <div class="meta">
+                <p class="byline">Posted on May 05, 2014</p>
+            </div>
+        </div>
+        {% endblock %}
+    </div>
+    <!-- end content -->
+    <!-- start sidebar -->
+    <div id="sidebar">
+        <ul>
+            {% if False %}
+                <li id="search">
+                    <h2><b class="text1">Search</b></h2>
+
+                    <form method="get" action="">
+                        <fieldset>
+                            <input type="text" id="s" name="s" value=""/>
+                            <input type="submit" id="x" value="Search"/>
+                        </fieldset>
+                    </form>
                 </li>
             {% endif %}
+            <li>
+                <h2><strong>Lorem</strong> Ipsum</h2>
+                <ul>
+                    <li><a href="#">Fusce dui neque fringilla</a></li>
+                    <li><a href="#">Eget tempor eget nonummy</a></li>
+                    <li><a href="#">Magna lacus bibendum mauris</a></li>
+                    <li><a href="#">Nec metus sed donec</a></li>
+                    <li><a href="#">Magna lacus bibendum mauris</a></li>
+                    <li><a href="#">Velit semper nisi molestie</a></li>
+                    <li><a href="#">Eget tempor eget nonummy</a></li>
+                </ul>
+            </li>
+            <li>
+                <h2><b>Volutpat</b> Dolore</h2>
+                <ul>
+                    <li><a href="#">Nec metus sed donec</a></li>
+                    <li><a href="#">Magna lacus bibendum mauris</a></li>
+                    <li><a href="#">Velit semper nisi molestie</a></li>
+                    <li><a href="#">Eget tempor eget nonummy</a></li>
+                    <li><a href="#">Nec metus sed donec</a></li>
+                    <li><a href="#">Magna lacus bibendum mauris</a></li>
+                    <li><a href="#">Velit semper nisi molestie</a></li>
+                </ul>
+            </li>
         </ul>
-    </nav>
-
-    {% block content %}
-<h1>Strona główna</h1>
-        <p><em>Akademia Blisko</em> to system e-learningowy który pozwoli Ci zdobywać wiedzę nie wychodząc z domu!</p>
-
-        <h2>PROMOCJA!</h2>
-        <p>Dołącz do społeczności! Tylko do końca czerwca za samą rejestrację otrzymasz 100 kredytów za darmo!</p>
-    {% endblock %}
-
-    <footer>
-        <p>
-            &copy; Copyright by Jakub Konieczny
-        </p>
-    </footer>
-
-   <h1><p> KREDYTY TAKIE FAJNE, WOW </p></h1>
+    </div>
+    <!-- end sidebar -->
+    <div style="clear: both;">&nbsp;</div>
 </div>
+<!-- end page -->
+<!-- start footer -->
+<div id="footer">
+    <p id="legal">(c) 2008 YourSite. Design by <a href="http://www.freecsstemplates.org/">Free CSS Templates</a> |
+        .</p>
+</div>
+<!-- end footer -->
 </body>
 </html>

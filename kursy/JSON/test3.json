@@ -4,16 +4,14 @@
         {
             "question": "Jakim znakiem zaczynamy opis obiektu w formacie JSON?",
             "correct": ["{"],
-            "false": ["/",
-                ":",
-                "["]
+            "false": ["/", ":", "["]
         },
         {
             "question": "Który z przykładów jest poprawną składnia formatu JSON?",
-            "correct": ["firstName": "Stefan"],
-            "false": ["<firstName>Stefan",
+            "correct": ["firstName", "Stefan"],
+            "false": ["&lt;firstName&gt;Stefan",
                 "firstName: Stefan",
-                "<firstName>Stefan</firstName>]
+                "&lt;firstName&gt;Stefan&lt;/firstName&gt;"]
         },
         {
             "question": "Jak dokonujemy analizy składniowej danych w formacie JSON?",

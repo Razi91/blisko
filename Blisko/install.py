@@ -24,6 +24,7 @@ def install_tests():
     """
     kursy = ["JSON", "Canvas"]
     for kurs in kursy:
+        print("Kurs "+kurs)
         dir = settings.BASE_DIR+"/kursy/"+kurs+"/"
         with open(dir+"data.json") as data:
             course = Course()
@@ -36,14 +37,17 @@ def install_tests():
             #objs = []
             course.save()
             for lesson in data['lessons']:
+                print("  Lekcja "+lesson['title'])
                 les = Lesson()
-                les.name = data['title']
+                les.name = lesson['title']
                 with open(dir+"/"+lesson['file']) as content:
+
                     les.content = content.read()
                 les.course = course
                 les.save()
             for test in data['tests']:
                 t = Test()
+                print("  Test "+test['file'])
                 with open(dir+"/"+test['file']) as ts:
                     ts = json.loads(ts.read())
                     t.name = ts['title']

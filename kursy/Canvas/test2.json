@@ -9,14 +9,14 @@
                 "Do przyspieszenia działania strony"]
         },
         {
-            "question": "Jaka przeglądarka nie wspiera działania elementów <canvas>?",
+            "question": "Jaka przeglądarka nie wspiera działania elementów &lt;canvas&gt;?",
             "correct": ["Internet Explorer 8"],
             "false": ["Google Chrome",
                 "Mozilla Firefox",
                 "Internet Explorer 9"]
         },
         {
-            "question": "Które przeglądarki wspiera działanie elementów <canvas>?",
+            "question": "Które przeglądarki wspiera działanie elementów &lt;canvas&gt;?",
             "correct": ["Google Chrome",
                 "Internet Explorer 9",
                 "Opera"],
