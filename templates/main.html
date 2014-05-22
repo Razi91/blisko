@@ -6,7 +6,10 @@
     <title>Akademia Blisko {% block title %}{% endblock %}</title>
     <meta name="keywords" content=""/>
     <meta name="description" content=""/>
-    <link href="/static/default.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/style/default.css" rel="stylesheet" type="text/css"/>
+    {% for style in styles %}
+        <link href="/static/style/{{ style }}.css" rel="stylesheet" type="text/css"/>
+    {% endfor %}
 </head>
 <body>
 <!-- start header -->
@@ -18,8 +21,8 @@
     </div>
     <div id="menu">
         <ul>
-            <li><a href="main.html">Strona główna</a></li>
-            <li><a href="szablony/kursy.html">Przeglądaj kursy</a></li>
+            <li><a href="/">Strona główna</a></li>
+            <li><a href="/kursy">Przeglądaj kursy</a></li>
             <li><a href="xx.html">fbfgbf</a></li>
             <li><a href="xx.html">Ofgbfgb</a></li>
             <li><a href="szablony/kontakt.html">Kontakt</a></li>
@@ -32,24 +35,25 @@
     <!-- start content -->
     <div id="content">
         {% block content %}
-        <div class="post">
-            <h2 class="title">Akademia Blisko</h2>
+            <div class="post">
+                <h2 class="title">Akademia Blisko</h2>
 
-            <div class="entry">
-                <p>Akademia Blisko to system e-learningowy który pozwoli Ci zdobywać wiedzę nie wychodząc z domu!</p>
+                <div class="entry">
+                    <p>Akademia Blisko to system e-learningowy który pozwoli Ci zdobywać wiedzę nie wychodząc z
+                        domu!</p>
+                </div>
             </div>
-        </div>
-        <div class="post">
-            <h2 class="title"><strong>PROMOCJA!</strong></h2>
+            <div class="post">
+                <h2 class="title"><strong>PROMOCJA!</strong></h2>
 
-            <div class="entry">
-                <p>Dołącz do społeczności! Tylko do końca czerwca za samą rejestrację otrzymasz 100 kredytów za
-                    darmo!</p>
+                <div class="entry">
+                    <p>Dołącz do społeczności! Tylko do końca czerwca za samą rejestrację otrzymasz 100 kredytów za
+                        darmo!</p>
+                </div>
+                <div class="meta">
+                    <p class="byline">Posted on May 05, 2014</p>
+                </div>
             </div>
-            <div class="meta">
-                <p class="byline">Posted on May 05, 2014</p>
-            </div>
-        </div>
         {% endblock %}
     </div>
     <!-- end content -->
