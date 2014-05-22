@@ -3,8 +3,9 @@ from django.http import HttpResponse, HttpRequest
 from django.template import Context, Template
 from django.shortcuts import render_to_response
 from web.models import *
+from django.db import IntegrityError, transaction
 # Create your views here.
-
+from django.conf.urls import url
 
 USER = 1
 TEACHER = 2
@@ -43,8 +44,9 @@ def kursy(request: HttpRequest):
     map['courses'] = Course.objects.all()
     return render_to_response('courses_list.html', map)
 
-def lessons(request: HttpRequest):
+def lekcje(request: HttpRequest):
     map = get(request)
+
     return render_to_response('lessons.html', map)
 
 def tests(request):

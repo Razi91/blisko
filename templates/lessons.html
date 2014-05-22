@@ -1,0 +1,16 @@
+{% extends "main.html" %}
+
+{% block title %}Blisko &mdash; Lekcje {{ lesson.name }}{% endblock %}
+
+{% block content %}
+    <table>
+        <tr>
+            Lekcja
+        </tr>
+        {% for course in courses %}
+            <tr>
+                {{ lesson.content }}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
