@@ -19,36 +19,13 @@ class User(models.Model):
     """
     login = models.CharField(max_length=30)
     password = models.CharField(max_length=128)
+    real_name = models.CharField(max_length=30)
     privilages = models.ForeignKey(AccountPrivilages)
     enabled = models.BooleanField(default=0)
     credits = models.IntegerField(default=0)
 
     def is_logged(self):
         return self.id != 0
-
-    def groups(self):
-        """
-            Grupy do których należy student
-        """
-        lst = Students.objects.filter(user=self)
-        groups = []
-        for l in lst:
-            groups.append(l.group)
-        return groups
-        
-    
-#     def is_student_of(self, group):
-#         """
-#             Użytkownik jest uczniem grupy
-#         """
-#         list = Students.objects.filter(group=group, user=self)
-#         return list.count()>0
-    
-#     def is_teacher_of(self, group):
-#         """
-#             Użytkownik jest nauczycielem grupy
-#         """
-#         return group.teacher == self
     
     def is_doing_test(self):
         """
@@ -70,9 +47,6 @@ class User(models.Model):
         """
         if self.is_doing_test() or self.is_watching_lesson(): return None
         tests = []
-#         for group in self.groups():
-#             tg = Test.objects.filter(course=group.course)
-#             tests.append(tg)
         #TODO: pobrać testy
         return tests
         

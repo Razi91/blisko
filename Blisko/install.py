@@ -22,7 +22,7 @@ def install_tests():
     """
     Instalacja kursów
     """
-    kursy = ["JSON"]
+    kursy = ["JSON", "Canvas"]
     for kurs in kursy:
         dir = settings.BASE_DIR+"/kursy/"+kurs+"/"
         with open(dir+"data.json") as data:

@@ -1,7 +1,7 @@
 {
-    "title" : "Kurs JSON",
-    "short" : "Kurs obsługi JSONa",
-    "long" : "W tym kursie nauczysz się obsługi JSONa",
+    "title" : "Kurs Canvas",
+    "short" : "Kurs obsługi Canvasaa",
+    "long" : "W tym kursie nauczysz się obsługi Canvasa",
 
     "lessons" : [
         {
@@ -18,8 +18,7 @@
             "title" : "Praktyka",
             "id" : 3,
             "file" : "lesson3.html"
-        },
-
+        }
     ],
 
     "tests" : [
