@@ -1,0 +1,26 @@
+{
+    "title": "Pierwszy sprawdzian",
+    "questions": [
+        {
+            "question": "jest największą zaletą stosowania elementu Canvas??",
+            "correct": ["Nie potrzeba wtyczek"],
+            "false": ["Mniejszy rozmiar pliku",
+                "Brak potrzeby kompilowania kodu.",
+                "Tworzenie grafiki rastrowej"]
+        },
+        {
+            "question": "Jaki język jest wykorzystywany przy tworzeniu rysunku w elemencie Canvas?",
+            "correct": ["JavaScript"],
+            "false": ["PHP",
+                "Dart",
+                "SQL"]
+        },
+        {
+            "question": "Jaki język jest wykorzystywany przy tworzeniu rysunku w elemencie Canvas?",
+            "correct": ["WebGL"],
+            "false": ["OpenGL",
+                "DirectX",
+                "HTML 4.01"]
+        }
+    ]
+}

@@ -1,0 +1,26 @@
+{
+    "title": "Drugi sprawdzian",
+    "questions": [
+        {
+            "question": "Do czego wykorzystywany jest Canvas",
+            "correct": ["Tworzenia grafik w locie"],
+            "false": ["Do pisania skryptów",
+                "Do odświeżania strony",
+                "Do przyspieszenia działania strony"]
+        },
+        {
+            "question": "Jaka przeglądarka nie wspiera działania elementów <canvas>?",
+            "correct": ["Internet Explorer 8"],
+            "false": ["Google Chrome",
+                "Mozilla Firefox",
+                "Internet Explorer 9"]
+        },
+        {
+            "question": "Jaka przeglądarka wspiera działanie elementów <canvas>?",
+            "correct": ["Wszystkie z powyższych"],
+            "false": ["Google Chrome",
+                "Internet Explorer 9",
+                "Opera"]
+        }
+    ]
+}

@@ -1,0 +1,43 @@
+{
+    "title" : "Kurs Canvas",
+    "short" : "Kurs obsługi Canvasaa",
+    "long" : "W tym kursie nauczysz się obsługi Canvasa",
+
+    "lessons" : [
+        {
+            "title" : "Zagadnienia teoretyczne",
+            "id" : 1,
+            "file" : "lesson1.html"
+        },
+        {
+            "title" : "Wykorzystanie",
+            "id" : 2,
+            "file" : "lesson2.html"
+        },
+        {
+            "title" : "Praktyka",
+            "id" : 3,
+            "file" : "lesson3.html"
+        },
+
+    ],
+
+    "tests" : [
+        {
+            "id": 10,
+            "file" : "test1.json"
+        },
+        {
+            "id" : 20,
+            "file" : "test2.json"
+        },
+        {
+            "id" : 30,
+            "file" : "test3.json"
+        }
+    ],
+
+    "list" : [
+        1, 10, 2, 20, 3, 30
+    ]
+}

@@ -1,0 +1,41 @@
+<h2>Praktyka</h2>
+<p> Proste metody, które na pewno Ci się przydadzą!
+    W celu wywołania funkcji rysującej używamy metody getContext(), w celu narysowania prostokątu używamy fillRect(), a aby zadeklarować gradient liniowy: createLinearGradient().
+</p>
+
+<p>
+    Korzystając z języka JavaScript, można rysować na elemencie Canvas
+    <code>
+    var example = document.getElementById('example');
+    var context = example.getContext('2d');
+    context.fillStyle = "rgb(255,0,0)";
+    context.fillRect(30, 30, 50, 50);
+    </code>
+    Powyższy kod rysuje na ekranie czerwony prostokąt.
+</p>
+
+<p>
+    Przykładowy fragment kodu HTML5 wykorzystujący tag <canvas>. Jeżeli tag ten nie jest obsługiwany, wyświetli się wpisany tekst.
+    <code>
+    <canvas id="example" width="200" height="200">
+    Twoja przeglądarka nie obsługuje elementu Canvas.
+    </canvas>
+    </code>
+</p>
+
+<p>
+    Aby utworzyć gradient liniowy w canvasie używamy:
+    <code>
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+
+        // Create gradient
+        var grd = ctx.createLinearGradient(0,0,200,0);
+        grd.addColorStop(0,"red");
+        grd.addColorStop(1,"white");
+
+        // Fill with gradient
+        ctx.fillStyle = grd;
+        ctx.fillRect(10,10,150,80);
+    </code>
+</p>

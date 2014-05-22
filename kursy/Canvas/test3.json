@@ -1,0 +1,26 @@
+{
+    "title": "Trzeci sprawdzian",
+    "questions": [
+        {
+            "question": "Jaką metoda umożliwia narysowanie prostokąta w elemencie CANVAS?",
+            "correct": ["fillRect()"],
+            "false": ["drawRectangle()",
+                "fillRectangle()",
+                "drawRect()"]
+        },
+        {
+            "question": "Jaką metodą deklaruje się gradient liniowy w elemencie CANVAS?",
+            "correct": ["createLinearGradient()"],
+            "false": ["newLinearGradient()",
+                "gradientLinear()",
+                "createGradientLinear()]
+        },
+        {
+            "question": "Wykorzystanie metody getContext() umożliwia:",
+            "correct": ["Wywoływanie funkcji rysujących."],
+            "false": ["Ustalenia wymiarów płótna",
+                "Stworzenie nowego okna do rysowania",
+                "Zdefiniowanie nowego płótna"]
+        }
+    ]
+}

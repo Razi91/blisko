@@ -16,11 +16,11 @@
                 "IRC"]
         },
         {
-            "question": "Web 2.0 to:",
-            "correct": ["Potoczne określenie dynamicznych serwisów internetowych opartych o treści użytkowników"],
-            "false": ["Nowa wersja World Wide Web",
-                "Rozszerzenie internetu o dodatkowe protokoły do szybszego przesyłania mediów",
-                "Żadne z powyższych"]
+            "question": "Od jakiego języka zależny jest JSON:",
+            "correct": ["Od żadnego"],
+            "false": ["Od Javy",
+                "Od C#",
+                "Od Perl"]
         }
     ]
 }
