@@ -16,11 +16,11 @@
                 "Internet Explorer 9"]
         },
         {
-            "question": "Jaka przeglądarka wspiera działanie elementów <canvas>?",
-            "correct": ["Wszystkie z powyższych"],
-            "false": ["Google Chrome",
+            "question": "Które przeglądarki wspiera działanie elementów <canvas>?",
+            "correct": ["Google Chrome",
                 "Internet Explorer 9",
-                "Opera"]
+                "Opera"],
+            "false": ["Internet Explorer 8"]
         }
     ]
 }
