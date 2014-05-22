@@ -140,7 +140,7 @@ class Test(models.Model):
         """
             Punkty zdobyte
         """
-        if not fromJson: return
+        #if not fromJson: return
         pts = 0
         for question in parsedQuestions:
             pts += question.pts
@@ -182,21 +182,23 @@ class Question(models.Model):
     content = models.TextField()
     type = models.CharField(max_length=1, choices=TYPE, default=CLOSED_ONE)
     points = models.IntegerField()
-    
+
+    def answers(self):
+        return Answer.objects.filter(question=self)
+
     class Meta:
         db_table = "Question"
     
     def no_error(self):
-        if type == OPEN:
-            return True
+        if type == Question.OPEN:
             return True
         list = Answer.objects.get(question=self)
         correct = 0
         for ans in list:
             if ans.correct: correct += 1
-        if type == CLOSED_ONE and correct == 1:
+        if type == Question.CLOSED_ONE and correct == 1:
             return True
-        elif type == CLOSED_MANT and correct > 0:
+        elif type == Question.CLOSED_MANT and correct > 0:
             return True
         return False
     

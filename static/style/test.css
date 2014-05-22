@@ -1,0 +1,19 @@
+.questionBox {
+    margin-top: 20px;
+}
+
+.questionBox .question {
+    font-size: 16pt;
+    font-weight: bold;
+}
+
+.questionBox ul {
+    list-style: none;
+}
+
+.submitButton {
+    background: #EDEDED;
+    border: solid 1px black;
+    border-radius: 15px;
+    font-size: 24pt;
+}

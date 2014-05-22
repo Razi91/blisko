@@ -1,0 +1,24 @@
+{% extends "main.html" %}
+
+{% block title %}Test: {{ test.name }}{% endblock %}
+
+{% block content %}
+    <h1>{{ test.name }}</h1>
+    <form action="" method="post">
+        {% for question in test.questions %}
+            <div class="questionBox">
+                <div class="question">{{ question.content }}</div>
+                <ul>
+                    {% for ans in question.answers %}
+                        <li>
+                            <input type="checkbox" class="checkbox" name="ans{{ ans.id }}"/>
+                            {{ ans.text }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+        <input type="submit" value="Wyślij" class="submitButton"/>
+    </form>
+
+{% endblock %}
