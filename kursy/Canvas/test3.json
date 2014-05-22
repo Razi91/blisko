@@ -13,7 +13,7 @@
             "correct": ["createLinearGradient()"],
             "false": ["newLinearGradient()",
                 "gradientLinear()",
-                "createGradientLinear()]
+                "createGradientLinear()"]
         },
         {
             "question": "Wykorzystanie metody getContext() umożliwia:",
