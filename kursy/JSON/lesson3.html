@@ -1,0 +1,38 @@
+<h2>Praktyka</h2>
+<p>
+    Analiza składniowa (ang. parsing) danych w formacie JSON w JavaScript jest możliwe poprzez funkcję JSON.parse() lub eval(). Bezpieczniejsza jest jednak funkcja JSON.parse().
+    Zagrożenie polega na tym, że funkcja eval() powoduje wykonanie dowolnego kodu, czyli także takiego,
+    który może być dowolnym poleceniem JavaScript i może spowodować np. że prywatne dane użytkowania zostaną wysłane na zewnętrzny serwer.
+    Funkcja JSON.parse() nie jest na to wrażliwa, ponieważ sprawdza czy analizowany ciąg znaków jest prawidłowy i tylko wtedy przekształca go na obiekt danych.
+</p>
+
+<p>
+    JSON jest jednym z nieformalnych sposobów przekazywania danych do aplikacji opartych o AJAX. W typowych przypadkach dane w formacie JSON są pobierane z serwera jako tekst przy wykorzystaniu obiektu XMLHttpRequest języka JavaScript,
+    a następnie przekształcane w obiekt. Tekst powinien być kodowany za pomocą UTF-8, który jest w JSON domyślny.
+
+    Przykład danych zapisanych w JSON:
+    <p>
+     {"menu": {
+        "id": "file",
+        "value": "File",
+        "popup": {
+            "menuitem": [
+                {"value": "New", "onclick": "CreateNewDoc()"},
+                {"value": "Open", "onclick": "OpenDoc()"},
+                {"value": "Close", "onclick": "CloseDoc()"}
+            ]
+        }
+     }}
+    </p>
+
+    Przykład danych zapisanych w XML:
+    <p>
+         <menu id="file" value="File">
+            <popup>
+                 <menuitem value="New" onclick="CreateNewDoc()" />
+                 <menuitem value="Open" onclick="OpenDoc()" />
+                 <menuitem value="Close" onclick="CloseDoc()" />
+            </popup>
+         </menu>
+    </p>
+</p>
