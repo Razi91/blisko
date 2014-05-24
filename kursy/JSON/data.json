@@ -2,6 +2,7 @@
     "title" : "Kurs JSON",
     "short" : "Kurs obsługi JSONa",
     "long" : "W tym kursie nauczysz się obsługi JSONa",
+    "cost" : 50,
 
     "lessons" : [
         {

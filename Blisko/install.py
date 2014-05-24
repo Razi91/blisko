@@ -9,6 +9,7 @@ from Blisko import settings
 import json
 from django.db import transaction
 
+
 def install_basic():
     """
         Kompletnie podstawowa konfiguracja do wywołania zaraz po zresetowaniu bazy danych
@@ -19,6 +20,58 @@ def install_basic():
     user.privilages_id = 0
     user.save()
 
+
+def install_course(kurs):
+    print("Kurs " + kurs)
+    dir = settings.BASE_DIR + "/kursy/" + kurs + "/"
+    with open(dir + "data.json") as data:
+        course = Course()
+        data = json.loads(data.read())
+        course.name = data['title']
+        course.short = data['short']
+        course.long = data['long']
+        course.cost = 50
+        course.level = 1
+        course.save()
+        for lesson in data['lessons']:
+            print("  Lekcja " + lesson['title'])
+            les = Lesson()
+            les.name = lesson['title']
+            with open(dir + "/" + lesson['file']) as content:
+                les.content = content.read()
+            les.course = course
+            les.save()
+        for test in data['tests']:
+            t = Test()
+            print("  Test " + test['file'])
+            with open(dir + "/" + test['file']) as ts:
+                ts = json.loads(ts.read())
+                t.name = ts['title']
+                t.points = len(ts['questions'])
+                t.course = course
+                t.save()
+                for question in ts['questions']:
+                    quest = Question()
+                    quest.type = Question.CLOSED_BINARY
+                    quest.test = t
+                    quest.content = question['question']
+                    quest.save()
+                    for ans in question['correct']:
+                        a = Answer()
+                        a.question = quest
+                        a.correct = True
+                        a.text = ans
+                        a.save()
+                    for ans in question['false']:
+                        a = Answer()
+                        a.question = quest
+                        a.correct = False
+                        a.text = ans
+                        a.save()
+                t.course = course
+                #course
+
+
 def install_tests():
     """
     Instalacja kursów
@@ -26,52 +79,4 @@ def install_tests():
     with transaction.atomic():
         kursy = ["JSON", "Canvas"]
         for kurs in kursy:
-            print("Kurs "+kurs)
-            dir = settings.BASE_DIR+"/kursy/"+kurs+"/"
-            with open(dir+"data.json") as data:
-                course = Course()
-                data = json.loads(data.read())
-                course.name = data['title']
-                course.short = data['short']
-                course.long = data['long']
-                course.cost = 50
-                course.level = 1
-                #objs = []
-                course.save()
-                for lesson in data['lessons']:
-                    print("  Lekcja "+lesson['title'])
-                    les = Lesson()
-                    les.name = lesson['title']
-                    with open(dir+"/"+lesson['file']) as content:
-                        les.content = content.read()
-                    les.course = course
-                    les.save()
-                for test in data['tests']:
-                    t = Test()
-                    print("  Test "+test['file'])
-                    with open(dir+"/"+test['file']) as ts:
-                        ts = json.loads(ts.read())
-                        t.name = ts['title']
-                        t.points = len(ts['questions'])
-                        t.course = course
-                        t.save()
-                        for question in ts['questions']:
-                            quest = Question()
-                            quest.type = Question.CLOSED_BINARY
-                            quest.test = t
-                            quest.content = question['question']
-                            quest.save()
-                            for ans in question['correct']:
-                                a = Answer()
-                                a.question = quest
-                                a.correct = True
-                                a.text = ans
-                                a.save()
-                            for ans in question['false']:
-                                a = Answer()
-                                a.question = quest
-                                a.correct = False
-                                a.text = ans
-                                a.save()
-                        t.course = course
-                #course
+            install_course(kurs)
