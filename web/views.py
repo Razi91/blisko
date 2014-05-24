@@ -1,10 +1,12 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.http import HttpResponse, HttpRequest
 from django.template import Context, Template
 #from settings import *
 from django.shortcuts import render_to_response
 from web.models import *
-import hashlib
+from web import utils
+
 import uuid
 from django.db import IntegrityError, transaction
 from django.contrib.auth.hashers import PBKDF2PasswordHasher
@@ -38,13 +40,13 @@ def login(request: HttpRequest):
         map = get(request)
         login = request['login']
         password = request['pass']
-        password = hashlib.sha1(password)
+        password = utils.hash_password(password)
         user = User.objects.get(login=login)
         if user == None:
             map = get(request)
             #TODO: szablon błędu logowania
             return render_to_response('login_failed.html', map)
-        if user.password != password:
+        if utils.check_password(hashed_password=user.password, user_password=password):
             map = get(request)
             #TODO: szablon błędu logowania
             return render_to_response('login_failed.html', map)
@@ -102,15 +104,6 @@ def test(request, id):
     #test.is_available_for_user(user)
     map['test'] = test
     return render_to_response('test.html', map)
-
-def hash_password(password):
-    # uuid is used to generate a random number
-    #salt = uuid.uuid4().hex
-    return hashlib.sha256("""salt.encode() + """password.encode()).hexdigest() + ':' #+ salt
-
-def check_password(hashed_password, user_password):
-    password#, salt = hashed_password.split(':')
-    return password == hashlib.sha256("""salt.encode() + """user_password.encode()).hexdigest()
 
 #error
 
