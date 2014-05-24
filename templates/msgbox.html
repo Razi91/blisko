@@ -1,4 +1,4 @@
-{% block content %}
+{% if msg %}
     <h1>{{ msg.head }}</h1>
     <p>
     {{ msg.message }}
@@ -8,4 +8,4 @@
         <li>{{ action.html }}</li>
     {% endfor %}
     </ul>
-{% endblock %}
+{% endif %}
