@@ -4,8 +4,10 @@ from django.http import HttpResponse, HttpRequest
 from django.template import Context, Template
 #from settings import *
 from django.shortcuts import render_to_response
+from web.messages import ActionBack
 from web.models import *
 from web import utils
+from web import messages
 
 import uuid
 from django.db import IntegrityError, transaction
@@ -51,8 +53,10 @@ def login(request: HttpRequest):
             #TODO: szablon błędu logowania
             return render_to_response('login_failed.html', map)
         #sukces logowania
-        #TODO: wrzucić do session→user ID usera
-        return render_to_response('login_success.html', map)
+        request.session['id'] = user.id
+        msg = messages.Message("Zalogowano", "Logowanie przebiegło pomyślnie", [ActionBack])
+        map['msg'] = msg
+        #return render_to_response('msgbox.html', map)
     map = get(request)
     return render_to_response('main.html', map)
 
