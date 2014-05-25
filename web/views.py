@@ -69,21 +69,23 @@ def logout(request: HttpRequest):
 
 def register(request: HttpRequest):
     if request.method == 'POST':
-        #TODO: sprawdź: login, pass1, pass2, mail,
-        ## utwórz użytkownika, zapisz do bazy
         login = request.POST.get('login', -1)  #http://stackoverflow.com/questions/12518517/request-post-getsth-vs-request-poststh-difference
-        password1 = request.POST.get('password1', -1)
-        password1 = utils.hash_password(password1) #hashowanie, funkcja w utils
-        password2 = request.POST.get('password2', -1)
-        password2 = utils.hash_password(password2)
+        password1 = request.POST.get('pass1', -1)
+        password2 = request.POST.get('pass2', -1)
         #email = request.POST.get('email', -1)
         if password1 == password2:
             user = User()
-            user.name = new_user
+            user.login = login
+            user.password = password1
+            user.privilages = AccountPrivilages.objects.get(id=1)
             user.save()
         else:
-            msg = messages.Message("Błąd!", "Rejestracja nie powiodła się, sprawdź wprowadzone dane.", [Action])
+            msg = messages.Message("Błąd!", "Rejestracja nie powiodła się, sprawdź wprowadzone dane.", [])
+            map = get(request)
             map['msg'] = msg
+            map['login'] = login
+            map['pass'] = password1
+            return render_to_response('register.html', map)
         pass
     map = get(request)
     return render_to_response('register.html', map)

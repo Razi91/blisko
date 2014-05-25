@@ -3,12 +3,12 @@
 {% block title %}Rejestracja{% endblock %}
 
 {% block content %}
-    <form id="register" action="/zarejestruj" method="post">{% csrf_token %}
+    <form id="register" action="/zarejestruj/" method="post">{% csrf_token %}
         <p>Login:<br/>
-            <input type="text" name="login">
+            <input type="text" name="login" value="{{ login }}">
             <br/>
             Email:<br/>
-            <input type="text" name="email">
+            <input type="text" name="email" value="{{ email }}">
             <br/>
             Hasło:<br/>
             <input type="password" name="pass1">
