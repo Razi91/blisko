@@ -89,6 +89,7 @@ def register(request: HttpRequest):
             user.password = utils.hash_password(password1)
             print(user.password)
             user.privilages = AccountPrivilages.objects.get(id=1)
+            user.credits = 100
             user.save()
             map = get(request)
             return render_to_response('main.html', map)
