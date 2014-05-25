@@ -1,11 +1,11 @@
 {% if msg %}
     <h1>{{ msg.head }}</h1>
     <p>
-    {{ msg.message }}
-    </p>
+        {{ msg.message | safe }}
     <ul>
-    {% for action in msg.actions %}
-        <li>{{ action.html }}</li>
-    {% endfor %}
+        {% for action in msg.actions %}
+            <li>{{ action.html | safe }}</li>
+        {% endfor %}
     </ul>
+    </p>
 {% endif %}

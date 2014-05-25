@@ -68,6 +68,8 @@ def logout(request: HttpRequest):
 
 def main(request: HttpRequest):
     map = get(request)
+    msg = messages.Message("Zalogowano", "Logowanie przebiegło pomyślnie", [ActionBack])
+    map['msg'] = msg
     return render_to_response('main.html', map)
 
 
@@ -75,6 +77,7 @@ def kursy(request: HttpRequest):
     map = get(request)
     map['courses'] = Course.objects.all()
     return render_to_response('courses_list.html', map)
+
 
 def kurs(request: HttpRequest):
     map = get(request)
