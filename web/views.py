@@ -71,7 +71,9 @@ def register(request: HttpRequest):
     if request.method == 'POST':
         login = request.POST.get('login', -1)  #http://stackoverflow.com/questions/12518517/request-post-getsth-vs-request-poststh-difference
         password1 = request.POST.get('pass1', -1)
+        password1 = utils.hash_password('pass1')
         password2 = request.POST.get('pass2', -1)
+        password2 = utils.hash_password('pass2')
         #email = request.POST.get('email', -1)
         if password1 == password2:
             user = User()
@@ -79,12 +81,15 @@ def register(request: HttpRequest):
             user.password = password1
             user.privilages = AccountPrivilages.objects.get(id=1)
             user.save()
+        elif len(password1) < 5:
+            msg = messages.Message("Twoje hasło jest za krótkie!", [])
+            map['msg'] = msg
         else:
             msg = messages.Message("Błąd!", "Rejestracja nie powiodła się, sprawdź wprowadzone dane.", [])
             map = get(request)
             map['msg'] = msg
             map['login'] = login
-            map['pass'] = password1
+            map['pass1'] = password1
             return render_to_response('register.html', map)
         pass
     map = get(request)
