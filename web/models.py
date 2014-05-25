@@ -75,8 +75,8 @@ class User(models.Model):
         password = '%s$%s$%s' % (algo, salt, hsh)
         return password == self.password
     
-    def _str_(self):
-        return person.name
+    def __str__(self):
+        return self.login
     
     class Meta:
         db_table = "User"
