@@ -170,6 +170,10 @@ def test(request, id):
     map['test'] = test
     return render_to_response('test.html', map)
 
+def o_platformie(request: HttpRequest):
+    map = get(request)
+    return render_to_response('about.html', map)
+
 #error
 
 
