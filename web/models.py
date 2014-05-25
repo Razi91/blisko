@@ -102,7 +102,7 @@ class Group(models.Model):
     class Meta:
         db_table = "Group"
         
-class CourceAccess(models.Model):
+class CourseAccess(models.Model):
     """
         Dostęp użytkownika do kursu
     """

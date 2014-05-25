@@ -131,6 +131,10 @@ def kup(request: HttpRequest, id):
     try:
         course = Course.objects.get(id=id)
         user.credits -= course.cost
+        acc = CourseAccess()
+        acc.user = user
+        acc.course = course
+        acc.save()
         user.save()
         #TODO: przypisanie kursu do użytkownika
     except Course.DoesNotExist:
