@@ -42,8 +42,8 @@ def get(request: HttpRequest):
 def login(request: HttpRequest):
     if request.method == 'POST':
         map = get(request)
-        login = request['login']
-        password = request['pass']
+        login = request.post.get('login', "")
+        password = request.post.get('pass', "")
         password = utils.hash_password(password)
         user = User.objects.get(login=login)
         if user == None:
