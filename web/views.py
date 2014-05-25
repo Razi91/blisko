@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.http import HttpResponse, HttpRequest
+from django.core.context_processors import csrf
 from django.template import Context, Template
 #from settings import *
 from django.shortcuts import render_to_response
@@ -33,6 +34,7 @@ def get(request: HttpRequest):
         Ogólna mapa do użytku w szablonach
     """
     map = {}
+    map.update(csrf(request))
     map['user'] = user(request)
     return map
 
@@ -63,6 +65,13 @@ def login(request: HttpRequest):
 
 def logout(request: HttpRequest):
     request.session['user'] = None
+    pass
+
+def register(request: HttpRequest):
+    if request.method == 'POST':
+        #TODO: sprawdź: login, pass1, pass2, mail,
+        ## utwórz użytkownika, zapisz do bazy
+        pass
     pass
 
 
