@@ -26,7 +26,7 @@ def user(request: HttpRequest):
         Zwraca zalogowanego użytkownika lub None
     """
     id = request.session.get('user', 0)
-    print(request.session['id'])
+    #print(request.session['id'])
     user = User.objects.get(id=id)
     return user
 
@@ -151,6 +151,10 @@ def test(request, id):
     #test.is_available_for_user(user)
     map['test'] = test
     return render_to_response('test.html', map)
+
+def o_platformie(request: HttpRequest):
+    map = get(request)
+    return render_to_response('about.html', map)
 
 #error
 
