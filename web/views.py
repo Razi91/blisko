@@ -69,18 +69,19 @@ def logout(request: HttpRequest):
 
 def register(request: HttpRequest):
     if request.method == 'POST':
-        login = request.POST.get('login', -1)  #http://stackoverflow.com/questions/12518517/request-post-getsth-vs-request-poststh-difference
+        login = request.POST.get('login', -1)
         password1 = request.POST.get('pass1', -1)
-        password1 = utils.hash_password('pass1')
         password2 = request.POST.get('pass2', -1)
-        password2 = utils.hash_password('pass2')
-        #email = request.POST.get('email', -1)
+        email = request.POST.get('email', -1)
         if password1 == password2:
             user = User()
             user.login = login
-            user.password = password1
+            user.email=email
+            user.password = utils.hash_password(password1)
             user.privilages = AccountPrivilages.objects.get(id=1)
             user.save()
+            map = get(request)
+            return render_to_response('main.html', map)
         elif len(password1) < 5:
             msg = messages.Message("Twoje hasło jest za krótkie!", [])
             map['msg'] = msg
@@ -89,7 +90,7 @@ def register(request: HttpRequest):
             map = get(request)
             map['msg'] = msg
             map['login'] = login
-            map['pass1'] = password1
+            map['email'] = email
             return render_to_response('register.html', map)
         pass
     map = get(request)
