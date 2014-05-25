@@ -1,7 +1,7 @@
 <li>
     <h2><b>Zaloguj się:</b></h2>
 
-    <form action="/login" method="post">
+    <form action="/zaloguj" method="post">{% csrf_token %}
         <span style="width: 50px">Login: </span>
         <input type="text" name="login" style="width: 120px;"/> <br/>
         <span style="width: 50px">Hasło: </span>
