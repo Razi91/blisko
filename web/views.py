@@ -10,6 +10,7 @@ from web.messages import ActionBack
 from web.models import *
 from web import utils
 from web import messages
+import datetime
 
 import uuid
 from django.db import IntegrityError, transaction
@@ -134,6 +135,7 @@ def kup(request: HttpRequest, id):
         acc = CourseAccess()
         acc.user = user
         acc.course = course
+        acc.date = datetime.datetime.now()
         acc.save()
         user.save()
         #TODO: przypisanie kursu do użytkownika

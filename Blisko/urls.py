@@ -20,6 +20,5 @@ urlpatterns = patterns('',
     url(r'^zaloguj/$', views.login),
     url(r'^wyloguj/$', views.logout),
     url(r'^kup/([0-9]+)', views.kup),
-
     url(r'^o_platformie/$', views.o_platformie),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
