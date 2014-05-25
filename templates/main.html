@@ -10,10 +10,10 @@
     {% for style in styles %}
         <link href="/static/style/{{ style }}.css" rel="stylesheet" type="text/css"/>
     {% endfor %}
-<script type="application/javascript">
-    {% block script %}
-    {% endblock %}
-</script>
+    <script type="application/javascript">
+        {% block script %}
+        {% endblock %}
+    </script>
 </head>
 <body>
 <!-- start header -->
@@ -30,6 +30,8 @@
             {% if not user.is_logged %}
                 <li><a href="/zaloguj">Zaloguj</a></li>
                 <li><a href="/zarejestruj">Zarejestruj się</a></li>
+            {% else %}
+                <li><a href="/wyloguj">Wyloguj</a></li>
             {% endif %}
             <li><a href="/platforma">O platformie</a></li>
         </ul>

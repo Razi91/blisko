@@ -26,6 +26,7 @@ def user(request: HttpRequest):
         Zwraca zalogowanego użytkownika lub None
     """
     id = request.session.get('user', 0)
+    print(request.session['id'])
     user = User.objects.get(id=id)
     return user
 
@@ -42,7 +43,6 @@ def get(request: HttpRequest):
 
 def login(request: HttpRequest):
     if request.method == 'POST':
-        map = get(request)
         login = request.POST.get('login', "")
         password = request.POST.get('pass', "")
         try:
@@ -52,16 +52,17 @@ def login(request: HttpRequest):
             print(user.password)
             if not utils.check_password(user.password, password):
                 map = get(request)
-                msg = messages.Message("Błąd logowania", "Złe hasło", [ActionBack])
+                msg = messages.Message("Błąd logowania", "Złe hasło", [])
                 map['msg'] = msg
                 return render_to_response('main.html', map)
-            request.session['id'] = user.id
-            msg = messages.Message("Zalogowano", "Logowanie przebiegło pomyślnie", [ActionBack])
+            request.session['user'] = user.id
+            map = get(request)
+            msg = messages.Message("Zalogowano", "Logowanie przebiegło pomyślnie", [])
             map['msg'] = msg
             return render_to_response('main.html', map)
         except User.DoesNotExist:
             map = get(request)
-            msg = messages.Message("Błąd logowania", "Użytkownik nie istnieje", [ActionBack])
+            msg = messages.Message("Błąd logowania", "Użytkownik nie istnieje", [])
             map['msg'] = msg
             return render_to_response('main.html', map)
     map = get(request)
@@ -69,9 +70,11 @@ def login(request: HttpRequest):
 
 
 def logout(request: HttpRequest):
-    request.session['user'] = None
-    pass
-
+    request.session['user'] = 0
+    map = get(request)
+    msg = messages.Message("Wylogowano!", "Zostałeś wylogowany z serwisu", [])
+    map['msg'] = msg
+    return render_to_response('main.html', map)
 
 def register(request: HttpRequest):
     if request.method == 'POST':
