@@ -1,17 +1,25 @@
 {% extends "main.html" %}
 
-{% block title %}Blisko &mdash; Kursy{% endblock %}
+{% block title %}Blisko — Kursy{% endblock %}
 
 {% block content %}
-    <table>
+    <table style="width: 100%">
         <tr>
             <th>Kurs</th>
             <th>Cena</th>
+            {% if user.is_logged %}
+                <th>Akcja</th>
+            {% endif %}
         </tr>
         {% for course in courses %}
             <tr>
                 <td>{{ course.name }}</td>
                 <td>{{ course.cost }}</td>
+                {% if course.can_buy %}
+                    <td>
+                        <a href="/kup/{{ course.id }}/">kup</a>
+                    </td>
+                {% endif %}
             </tr>
         {% endfor %}
     </table>

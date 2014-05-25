@@ -27,6 +27,9 @@ class User(models.Model):
 
     def is_logged(self):
         return self.id != 0
+
+    def can_buy(self, course):
+        return course.cost <= self.credits
     
     def is_doing_test(self):
         """

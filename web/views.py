@@ -26,7 +26,6 @@ def user(request: HttpRequest):
         Zwraca zalogowanego użytkownika lub None
     """
     id = request.session.get('user', 0)
-    print(request.session['id'])
     user = User.objects.get(id=id)
     return user
 
@@ -67,7 +66,6 @@ def login(request: HttpRequest):
             return render_to_response('main.html', map)
     map = get(request)
     return render_to_response('main.html', map)
-
 
 def logout(request: HttpRequest):
     request.session['user'] = 0
@@ -116,12 +114,32 @@ def main(request: HttpRequest):
 def kursy(request: HttpRequest):
     map = get(request)
     map['courses'] = Course.objects.all()
+    user = map['user']
+    for course in map['courses']:
+        course.can_buy = user.can_buy(course)
     return render_to_response('courses_list.html', map)
 
 
 def kurs(request: HttpRequest):
     map = get(request)
     return render_to_response('course.html', map)
+
+def kup(request: HttpRequest, id):
+    id = int(id)
+    map = get(request)
+    user=map['user']
+    try:
+        course = Course.objects.get(id=id)
+        user.credits -= course.cost
+        user.save()
+        #TODO: przypisanie kursu do użytkownika
+    except Course.DoesNotExist:
+        map = get(request)
+        msg = messages.Message("Błąd", "Kurs nie istnieje", [ActionBack()])
+        map['msg'] = msg
+        return render_to_response('courses_list.html', map)
+    return render_to_response('courses_list.html', map)
+
 
 
 def lekcja(request: HttpRequest):

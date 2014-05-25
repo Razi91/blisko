@@ -19,4 +19,6 @@ urlpatterns = patterns('',
     url(r'^zarejestruj/$', views.register),
     url(r'^zaloguj/$', views.login),
     url(r'^wyloguj/$', views.logout),
+    url(r'^kup/([0-9]+)', views.kup),
+
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
