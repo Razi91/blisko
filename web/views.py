@@ -68,8 +68,6 @@ def logout(request: HttpRequest):
 
 def main(request: HttpRequest):
     map = get(request)
-    msg = messages.Message("Zalogowano", "Logowanie przebiegło pomyślnie", [ActionBack])
-    map['msg'] = msg
     return render_to_response('main.html', map)
 
 
