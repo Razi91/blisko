@@ -71,6 +71,19 @@ def register(request: HttpRequest):
     if request.method == 'POST':
         #TODO: sprawdź: login, pass1, pass2, mail,
         ## utwórz użytkownika, zapisz do bazy
+        login = request.POST.get('login', -1)  #http://stackoverflow.com/questions/12518517/request-post-getsth-vs-request-poststh-difference
+        password1 = request.POST.get('password1', -1)
+        password1 = utils.hash_password(password1)
+        password2 = request.POST.get('password2', -1)
+        password2 = utils.hash_password(password2)
+        #email = request.POST.get('email', -1)
+        if password1 == password2:
+            user = User()
+            user.name = new_user
+            user.save()
+        else:
+            msg = messages.Message("Błąd!", "Rejestracja nie powiodła się, sprawdź wprowadzone dane.", [Action])
+            map['msg'] = msg
         pass
     map = get(request)
     return render_to_response('register.html', map)
