@@ -73,7 +73,7 @@ def register(request: HttpRequest):
         ## utwórz użytkownika, zapisz do bazy
         login = request.POST.get('login', -1)  #http://stackoverflow.com/questions/12518517/request-post-getsth-vs-request-poststh-difference
         password1 = request.POST.get('password1', -1)
-        password1 = utils.hash_password(password1)
+        password1 = utils.hash_password(password1) #hashowanie, funkcja w utils
         password2 = request.POST.get('password2', -1)
         password2 = utils.hash_password(password2)
         #email = request.POST.get('email', -1)
