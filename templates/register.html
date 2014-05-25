@@ -4,8 +4,54 @@
 
 {% block content %}
 
+    <td valign="top">
+        <table width="100%" border="0" align="center">
+            <td width="50%" valign="top">
+                <p>Warunki:</p>
+
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Etiam vitae adipiscing risus, eget dictum eros. Aenean mi orci, venenatis vitae leo ut,
+                    malesuada bibendum ipsum. Sed massa lectus, sodales eu elit nec, mattis egestas nulla.
+                    Etiam non porta lacus, tincidunt venenatis nunc. Mauris hendrerit, lacus vel tempor feugiat,
+                    libero arcu ultrices velit, facilisis gravida nulla sem rhoncus turpis. Pellentesque tristique
+                    enim in felis luctus facilisis ut quis eros. Nunc nec aliquam felis.
+                </p>
+
+                <P>Sed tincidunt pulvinar mi at rhoncus. Fusce varius nunc sem, molestie faucibus tellus
+                    fermentum vel. Nullam euismod, nunc sit amet vulputate consectetur,
+                    turpis augue luctus purus,
+                    ut adipiscing mauris magna sed ligula. Morbi nec nulla sit amet felis sagittis consectetur.
+                    Proin consectetur vestibulum erat nec vulputate.
+                    Quisque fermentum, nibh gravida tempor condimentum, . </P>
+            </td>
+            <td>
+                <form name="form1" method="post" action="http://www.register"> <!-- do uzupełnienia -->
+                    <p>Login:<br/>
+                        <input type="text" name="textfield">
+                        <br/>
+                        Email:<br/>
+                        <input type="text" name="textfield">
+                        <br/>
+                        Hasło:<br/>
+                        <input type="password" name="textfield">
+                        <br/>
+                        Powtórz hasło:<br/>
+                        <input type="password" name="textfield">
+                        <br/>
+                        <br/>
+                        <input type="submit" name="Submit" value="Submit">
+                        <input type="reset" name="Reset" value="Reset">
+                        <br/>
+                    </p>
+                </form>
+            </td>
+
+        </table>
+    </td>
+
+
     <form id="register" action="/zarejestruj" method="post">{% csrf_token %}
-    <!-- TODO: zrobić formularz pokrywający podstawowe pola User -->
+        <!-- TODO: zrobić formularz pokrywający podstawowe pola User -->
     </form>
 
 {% endblock %}
