@@ -17,10 +17,10 @@ class User(models.Model):
     """
         Model użytkownika
     """
-    login = models.CharField(max_length=30)
+    login = models.CharField(max_length=30, unique=True)
     password = models.CharField(max_length=128)
-    #real_name = models.CharField(max_length=30)
-    #email = models.EmailField()
+    real_name = models.CharField(max_length=30)
+    email = models.EmailField(unique=True)
     privilages = models.ForeignKey(AccountPrivilages)
     enabled = models.BooleanField(default=0)
     credits = models.IntegerField(default=0)

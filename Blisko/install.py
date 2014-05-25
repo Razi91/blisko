@@ -14,10 +14,15 @@ def install_basic():
     """
         Kompletnie podstawowa konfiguracja do wywołania zaraz po zresetowaniu bazy danych
     """
+    priv = AccountPrivilages()
+    priv.name = "użytkownik"
+    priv.level = 1
+    priv.save()
     user = User()
     user.id = 0
     user.login = "Niezalogowany"
-    user.privilages_id = 0
+    user.privilages = priv
+    user.email = "nope@nope.com"
     user.save()
 
 
