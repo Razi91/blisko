@@ -2,6 +2,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpRequest
 from django.core.context_processors import csrf
+from django.db import models
 from django.template import Context, Template
 #from settings import *
 from django.shortcuts import render_to_response
@@ -42,23 +43,27 @@ def get(request: HttpRequest):
 def login(request: HttpRequest):
     if request.method == 'POST':
         map = get(request)
-        login = request['login']
-        password = request['pass']
-        password = utils.hash_password(password)
-        user = User.objects.get(login=login)
-        if user == None:
+        login = request.POST.get('login', "")
+        password = request.POST.get('pass', "")
+        try:
+            user = User.objects.get(login=login)
+            print(password)
+            print(utils.hash_password(password))
+            print(user.password)
+            if not utils.check_password(user.password, password):
+                map = get(request)
+                msg = messages.Message("Błąd logowania", "Złe hasło", [ActionBack])
+                map['msg'] = msg
+                return render_to_response('main.html', map)
+            request.session['id'] = user.id
+            msg = messages.Message("Zalogowano", "Logowanie przebiegło pomyślnie", [ActionBack])
+            map['msg'] = msg
+            return render_to_response('main.html', map)
+        except User.DoesNotExist:
             map = get(request)
-            #TODO: szablon błędu logowania
-            return render_to_response('login_failed.html', map)
-        if utils.check_password(hashed_password=user.password, user_password=password):
-            map = get(request)
-            #TODO: szablon błędu logowania
-            return render_to_response('login_failed.html', map)
-        #sukces logowania
-        request.session['id'] = user.id
-        msg = messages.Message("Zalogowano", "Logowanie przebiegło pomyślnie", [ActionBack])
-        map['msg'] = msg
-        #return render_to_response('msgbox.html', map)
+            msg = messages.Message("Błąd logowania", "Użytkownik nie istnieje", [ActionBack])
+            map['msg'] = msg
+            return render_to_response('main.html', map)
     map = get(request)
     return render_to_response('main.html', map)
 
@@ -66,6 +71,7 @@ def login(request: HttpRequest):
 def logout(request: HttpRequest):
     request.session['user'] = None
     pass
+
 
 def register(request: HttpRequest):
     if request.method == 'POST':
@@ -76,8 +82,10 @@ def register(request: HttpRequest):
         if password1 == password2:
             user = User()
             user.login = login
-            user.email=email
+            user.email = email
+            print(password1)
             user.password = utils.hash_password(password1)
+            print(user.password)
             user.privilages = AccountPrivilages.objects.get(id=1)
             user.save()
             map = get(request)
