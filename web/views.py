@@ -72,7 +72,8 @@ def register(request: HttpRequest):
         #TODO: sprawdź: login, pass1, pass2, mail,
         ## utwórz użytkownika, zapisz do bazy
         pass
-    pass
+    map = get(request)
+    return render_to_response('register.html', map)
 
 
 def main(request: HttpRequest):
