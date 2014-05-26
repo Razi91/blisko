@@ -1,0 +1,28 @@
+#course{
+    margin-top: 10pt;
+    margin-bottom: 10pt;
+    border-bottom: gray 1px solid;
+}
+
+
+#course #title{
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+#course #short {
+    float: left;
+}
+
+#course #cost {
+    float: right;
+}
+
+#course #action {
+    float: right;
+    clear: right;
+}
+
+#course #foot {
+    clear: both;
+}

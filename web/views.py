@@ -38,6 +38,13 @@ def get(request: HttpRequest):
     map = {}
     map.update(csrf(request))
     map['user'] = user(request)
+    platform = {
+        "courses": Course.objects.all().count(),
+        "lessons": Lesson.objects.all().count(),
+        "tests": Test.objects.all().count(),
+        "users": User.objects.all().count()
+    }
+    map['platform'] = platform
     return map
 
 
@@ -117,8 +124,9 @@ def kursy(request: HttpRequest):
     map = get(request)
     map['courses'] = Course.objects.all()
     user = map['user']
+    map['styles'] = ["courses"]
     for course in map['courses']:
-        course.can_buy = user.can_buy(course)
+        course.for_user(user)
     return render_to_response('courses_list.html', map)
 
 

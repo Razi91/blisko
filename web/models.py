@@ -7,8 +7,17 @@ class AccountPrivilages(models.Model):
     """
         Definiuje przywileje konta
     """
+    User = 1
+    Editor = 2
+    Moderator = 4
     name = models.CharField(max_length=40)
     level = models.IntegerField()
+
+    def is_editor(self):
+        return self.level & AccountPrivilages.Editor > 0
+
+    def is_moderator(self):
+        return self.level & AccountPrivilages.Moderator > 0
 
     class Meta:
         db_table = "AccountPrivilages"
@@ -28,9 +37,6 @@ class User(models.Model):
 
     def is_logged(self):
         return self.id != 0
-
-    def can_buy(self, course):
-        return course.cost <= self.credits and not self.owns_course(course)
 
     def is_doing_test(self):
         """

@@ -2,25 +2,38 @@
 
 {% block title %}Blisko — Kursy{% endblock %}
 
+
+
 {% block content %}
-    <table style="width: 100%">
-        <tr>
-            <th>Kurs</th>
-            <th>Cena</th>
-            {% if user.is_logged %}
-                <th>Akcja</th>
-            {% endif %}
-        </tr>
-        {% for course in courses %}
-            <tr>
-                <td>{{ course.name }}</td>
-                <td>{{ course.cost }}</td>
+
+    {% for course in courses %}
+        <div id="course">
+            <div id="title">
+                <a href="/kurs/{{ course.id }}">
+                    {{ course.title }} Placeholder
+                </a>
+            </div>
+            <div id="short">
+                {{ course.short }}
+            </div>
+            <div id="cost">
+                <strong>{{ course.cost }}</strong> kredytów
+            </div>
+            <div id="action">
                 {% if course.can_buy %}
-                    <td>
-                        <a href="/kup/{{ course.id }}/">kup</a>
-                    </td>
+                    <a href="/kup/{{ course.id }}/{{ course.title }}">Kup</a>
+                {% elif course.owned %}
+                    Już posiadasz
+                {% else %}
+                    Doładuj swoje konto
                 {% endif %}
-            </tr>
-        {% endfor %}
-    </table>
+            </div>
+            <div id="foot"></div>
+        </div>
+    {% empty %}
+        <h2>Brak dostępnych kursów</h2>
+        <p>Obecnie nie ma dostępnych kursów</p>
+    {% endfor %}
+
+
 {% endblock %}
