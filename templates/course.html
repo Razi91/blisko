@@ -1,7 +1,33 @@
-<h1>{{ course.title }}</h1>
-    <div>Dostępne lekcje dla tego kursu {{ course.lessons }}</div>
-        {% for course in courses %}
-            <tr>
-                <td>{{ course.test }}</td>
-            </tr>
+{% extends "main.html" %}
+
+{% block title %}Blisko — Kursy{% endblock %}
+
+
+{% block content %}
+    <h1>{{ course.title }}</h1>
+    <div id="description">
+        {{ course.long }}
+    </div>
+
+    <h2>Lekcje</h2>
+    <ul id="lessons">
+        {% for lesson in course.lessons %}
+                <li>
+                    <a href="/lekcja/{{ lesson.id }}">{{ lesson.name }}</a>
+                </li>
+        {% empty %}
+            <p>Brak lekcji w tym kursie</p>
         {% endfor %}
+    </ul>
+
+    <h2>Testy</h2>
+    <ul id="tests">
+        {% for test in course.tests %}
+                <li>
+                    <a href="/test/{{ test.id }}">{{ test.name }}</a>
+                </li>
+        {% empty %}
+            <p>Brak testów w tym kursie</p>
+        {% endfor %}
+    </ul>
+{% endblock %}
