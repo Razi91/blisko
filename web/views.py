@@ -122,9 +122,16 @@ def kursy(request: HttpRequest):
     return render_to_response('courses_list.html', map)
 
 
-def kurs(request: HttpRequest):
+def kurs(request: HttpRequest, id):
+    id = int(id)
     map = get(request)
-    return render_to_response('course.html', map)
+    try:
+        course = Course.objects.get(id=id)
+        map['course'] = course
+        course.for_user(map['user'])
+        return render_to_response('course.html', map)
+    except Course.DoesNotExist:
+        return render_to_response('main.html', map)
 
 def kup(request: HttpRequest, id):
     id = int(id)
