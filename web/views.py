@@ -164,9 +164,16 @@ def kup(request: HttpRequest, id):
 
 
 
-def lekcja(request: HttpRequest):
-    map = get(request)
-    return render_to_response('lessons.html', map)
+def lekcja(request: HttpRequest, id):
+    id = int(id)
+    try:
+        map = get(request)
+        lesson = Lesson.objects.get(id = id)
+        map['lesson'] = lesson
+        return render_to_response('lesson.html', map)
+    except Lesson.DoesNotExist:
+        map = get(request)
+        return render_to_response('main.html', map)
 
 
 def tests(request):
