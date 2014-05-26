@@ -87,11 +87,18 @@ class Course(models.Model):
         return Lesson.objects.filter(course=self)
 
     def tests(self):
-        return Test.objects.filter(course=self)
+        try:
+            return self.__tests
+        except:
+            self.__tests = Test.objects.filter(course=self)
+            return self.__tests
 
-    def for_user(self, user):
+    def for_user(self, user, tests=False):
         self.owned = CourseAccess.objects.filter(course=self, user=user).count() >= 1
         self.__can_buy = self.cost <= user.credits and not self.owned
+        if tests:
+            for test in self.tests():
+                test.for_user(user)
 
     def can_buy(self):
         return self.__can_buy
@@ -146,6 +153,20 @@ class Test(models.Model):
 
     def questions(self):
         return Question.objects.filter(test=self)
+
+    def for_user(self, user):
+        self.__done = Result.objects.filter(test=self, user=user).count() > 0
+        if not self.__done:
+            self.__result = -1
+        else:
+            self.__result = Result.objects.get(test=self, user=user).percent
+        print(self.__done)
+
+    def is_done(self):
+        return self.__done
+
+    def result(self):
+        return self.__result
 
     def parse(self, json):
         """
@@ -242,7 +263,7 @@ class Answer(models.Model):
     correct = models.BooleanField()
 
     def is_correct(self, ans):
-        return ans == correct
+        return ans == self.correct
 
     class Meta:
         db_table = "Answer"

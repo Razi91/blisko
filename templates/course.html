@@ -24,6 +24,9 @@
     <ul id="tests">
         {% for test in course.tests %}
                 <li>
+                    {% if test.is_done %}
+                        <span id="result">{{ test.result }}%</span>
+                    {% endif %}
                     <a href="/test/{{ test.id }}">{{ test.name }}</a>
                 </li>
         {% empty %}
