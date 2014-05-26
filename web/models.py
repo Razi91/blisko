@@ -274,6 +274,17 @@ class Activity(models.Model):
     
     class Meta:
         db_table = "Activity"
+
+class Comments(models.Model):
+    user = models.ForeignKey(User)
+    course = models.ForeignKey(Course)
+    date = models.DateField()
+    content = models.TextField(max_length=500, blank=False)
+    visibility = models.TextField()
+
+    class Meta:
+        db_table = "Comments"
+
     
 """
 Notatki jkonieczny
