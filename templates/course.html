@@ -1,16 +1,7 @@
-{% extends "main.html" %}
-
-{% block title %}Blisko &mdash; Kurs {{ course.name }}{% endblock %}
-
-{% block content %}
-    <table>
-        <tr>
-            Kurs
-        </tr>
+<h1>{{ course.title }}</h1>
+    <div>Dostępne lekcje dla tego kursu {{ course.lessons }}</div>
         {% for course in courses %}
             <tr>
-                {{ course.content }}
+                <td>{{ course.test }}</td>
             </tr>
         {% endfor %}
-    </table>
-{% endblock %}
