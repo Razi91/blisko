@@ -167,7 +167,7 @@ def kursWyslij(request: HttpRequest, id):
         result.test = test
         result.date = datetime.datetime.now()
         result.startdate = datetime.datetime.now()
-        result.percent = 100.0*pts/max
+        result.percent = 1.0*pts/max
         result.save()
         return render_to_response('course.html', map)
     except Course.DoesNotExist:
