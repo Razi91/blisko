@@ -45,7 +45,7 @@ def install_course(kurs):
         course.name = data['title']
         course.short = data['short']
         course.long = data['long']
-        course.cost = 50
+        course.cost = data['cost']
         course.level = 1
         course.save()
         for lesson in data['lessons']:

@@ -4,7 +4,8 @@
 
 {% block content %}
     <h1>{{ test.name }}</h1>
-    <form action="" method="post">
+    <form action="/kurs/{{ test.course.id }}/wyslij" method="post">{% csrf_token %}
+        <input type="hidden" name="test" value="{{ test.id }}"/>
         {% for question in test.questions %}
             <div class="questionBox">
                 <div class="question">{{ question.content }}</div>
