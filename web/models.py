@@ -301,17 +301,3 @@ class Comment(models.Model):
     class Meta:
         db_table = "Comment"
 
-
-"""
-Notatki jkonieczny
-
-    SELECTy dla testu + pytania + odpowiedzi
-
-    SELECT * FROM Question WHERE test = id_testu
-    
-    SELECT * FROM Answer WHERE question = id_question
-
-
-"""
-
-

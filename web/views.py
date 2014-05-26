@@ -6,10 +6,11 @@ from django.db import models
 from django.template import Context, Template
 #from settings import *
 from django.shortcuts import render_to_response
-from web.messages import ActionBack
+from web.messages import ActionBack, Message
 from web.models import *
 from web import utils
 from web import messages
+from web import tester
 import datetime
 
 import uuid
@@ -137,6 +138,37 @@ def kurs(request: HttpRequest, id):
         course = Course.objects.get(id=id)
         map['course'] = course
         course.for_user(map['user'])
+        return render_to_response('course.html', map)
+    except Course.DoesNotExist:
+        return render_to_response('main.html', map)
+
+
+def kursWyslij(request: HttpRequest, id):
+    id = int(id)
+    map = get(request)
+    try:
+        course = Course.objects.get(id=id)
+        map['course'] = course
+        user = map['user']
+        course.for_user(map['user'])
+        testid = request.POST.get("test", -1)
+        if testid == -1:
+            raise Course.DoesNotExist
+        test = Test.objects.get(id=testid)
+        pts, max = tester.points(request.POST, test)
+        msg=Message("Wysłano test", "Twój wynik to "+str(pts) + "punkty")
+        map['msg'] = msg
+        try:
+            Result.objects.get(user=user, test=test).delete()
+        finally:
+            pass
+        result = Result()
+        result.user = user
+        result.test = test
+        result.date = datetime.datetime.now()
+        result.startdate = datetime.datetime.now()
+        result.percent = 1.0*pts/max
+        result.save()
         return render_to_response('course.html', map)
     except Course.DoesNotExist:
         return render_to_response('main.html', map)
