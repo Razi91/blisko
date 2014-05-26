@@ -33,4 +33,18 @@
             <p>Brak testów w tym kursie</p>
         {% endfor %}
     </ul>
+
+    {% for comment in comments %}
+            <div id="author">
+                {{ comment.user.login }}
+            </div>
+            <div id="comment">
+                {{ comment.content }}
+            </div>
+            <div id="date">
+                {{ comment.date }}
+            </div>
+            <div id="footer"></div>
+    {% endfor %}
+
 {% endblock %}

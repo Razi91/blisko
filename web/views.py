@@ -235,6 +235,8 @@ def o_platformie(request: HttpRequest):
     map = get(request)
     return render_to_response('about.html', map)
 
+
+
 #error
 
 

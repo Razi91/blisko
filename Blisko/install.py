@@ -35,11 +35,6 @@ def install_basic():
     edytor.level = 2
     edytor.save()
 
-    edytor = AccountPrivilages()
-    edytor.name = "edytor"
-    edytor.level = 2
-    edytor.save()
-
 
 def install_course(kurs):
     print("Kurs " + kurs)
