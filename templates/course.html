@@ -42,18 +42,29 @@
             <p>Brak testów w tym kursie</p>
         {% endfor %}
     </ul>
-
+    <h2>Komentarze:</h2>
     {% for comment in comments %}
+        <div id="comment">
             <div id="author">
-                {{ comment.user.login }}
+                {{ comment.user.login }}:
             </div>
-            <div id="comment">
+            <div id="content">
                 {{ comment.content }}
             </div>
             <div id="date">
                 {{ comment.date }}
             </div>
-            <div id="footer"></div>
+            <div id="foot"></div>
+        </div>
+        <hr/>
     {% endfor %}
-
+    {% if user.is_logged %}
+        <div id="form">
+            <form action="/kurs/{{ course.id }}/" method="post">{% csrf_token %}
+                Skomentuj: <input name="content"/>
+                <br/>
+                <input type="submit" value="Skomentuj"/>
+            </form>
+        </div>
+    {% endif %}
 {% endblock %}

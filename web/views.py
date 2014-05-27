@@ -138,8 +138,20 @@ def kurs(request: HttpRequest, id):
     map = get(request)
     try:
         course = Course.objects.get(id=id)
+        if request.method == 'POST':
+            content = request.POST.get("content", "")
+            if len(content)>3:
+                com = Comment()
+                com.user = map['user']
+                com.course = course
+                com.date = datetime.datetime.now()
+                com.visibility = True
+                com.content = content
+                com.save()
         map['course'] = course
         course.for_user(map['user'], True)
+        comments = Comment.objects.filter(course=course)
+        map['comments'] = comments
         return render_to_response('course.html', map)
     except Course.DoesNotExist:
         return render_to_response('main.html', map)
