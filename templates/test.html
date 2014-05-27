@@ -13,7 +13,7 @@
                     {% for ans in question.answers %}
                         <li>
                             <input type="checkbox" class="checkbox" name="ans{{ ans.id }}"/>
-                            {{ ans.text }}
+                            {{ ans.text|safe }}
                         </li>
                     {% endfor %}
                 </ul>

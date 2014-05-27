@@ -8,7 +8,7 @@
         },
         {
             "question": "Który z przykładów jest poprawną składnia formatu JSON?",
-            "correct": ["firstName", "Stefan"],
+            "correct": ["\"firstName\": \"Stefan\""],
             "false": ["&lt;firstName&gt;Stefan",
                 "firstName: Stefan",
                 "&lt;firstName&gt;Stefan&lt;/firstName&gt;"]

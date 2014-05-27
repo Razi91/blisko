@@ -6,7 +6,7 @@ from django.db import models
 from django.template import Context, Template
 #from settings import *
 from django.shortcuts import render_to_response
-from web.messages import ActionBack, Message
+from web.messages import *
 from web.models import *
 from web import utils
 from web import messages
@@ -183,9 +183,10 @@ def kursWyslij(request: HttpRequest, id):
         result.startdate = datetime.datetime.now()
         result.percent = int(100.0*pts/max)
         result.save()
-        msg=Message("Wysłano test", "Twój wynik to "+str(result.percent) + "%")
+        action = ActionUrl("/kurs/%d/" % course.id, "Wróć do kursu")
+        msg=Message("Wysłano test", "Twój wynik to "+str(result.percent) + "%", [action])
         map['msg'] = msg
-        return render_to_response('main.html', map)
+        return render_to_response('boxonly.html', map)
     except Course.DoesNotExist:
         return render_to_response('main.html', map)
 
@@ -204,10 +205,11 @@ def kup(request: HttpRequest, id):
         acc.date = datetime.datetime.now()
         acc.save()
         user.save()
-        msg = messages.Message("Kurs zakupiony!", "Możesz teraz przeglądać lekcje i wykonywać testy", [])
+        action = ActionUrl("/kurs/%d/" % course.id, "Idź do kursu")
+        msg = messages.Message("Kurs zakupiony!", "Możesz teraz przeglądać lekcje i wykonywać testy", [action, ActionBack()])
         map['msg'] = msg
         #TODO: przypisanie kursu do użytkownika
-        return render_to_response('main.html', map)
+        return render_to_response('boxonly.html', map)
     except Course.DoesNotExist:
         map = get(request)
         #msg = messages.Message("Błąd", "Kurs nie istnieje", [ActionBack()])
