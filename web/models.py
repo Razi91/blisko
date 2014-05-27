@@ -206,7 +206,7 @@ class TestAvailability(models.Model):
     start = models.DateTimeField()
     end = models.DateTimeField()
 
-
+import random
 class Question(models.Model):
     OPEN = "o"
     CLOSED_ONE = "c"
@@ -223,7 +223,7 @@ class Question(models.Model):
     points = models.IntegerField()
 
     def answers(self):
-        return Answer.objects.filter(question=self)
+        return Answer.objects.filter(question=self).order_by('?')
 
     class Meta:
         db_table = "Question"
@@ -318,7 +318,6 @@ class Comment(models.Model):
     date = models.DateTimeField()
     content = models.TextField(max_length=500, blank=False)
     visibility = models.TextField()
-
     class Meta:
         db_table = "Comment"
 

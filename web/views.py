@@ -156,8 +156,6 @@ def kursWyslij(request: HttpRequest, id):
             raise Course.DoesNotExist
         test = Test.objects.get(id=testid)
         pts, max = tester.points(request.POST, test)
-        msg=Message("Wysłano test", "Twój wynik to "+str(1.0*pts/max) + "%")
-        map['msg'] = msg
         try:
             Result.objects.get(user=user, test=test).delete()
         except:
@@ -167,9 +165,11 @@ def kursWyslij(request: HttpRequest, id):
         result.test = test
         result.date = datetime.datetime.now()
         result.startdate = datetime.datetime.now()
-        result.percent = 1.0*pts/max
+        result.percent = int(100.0*pts/max)
         result.save()
-        return render_to_response('course.html', map)
+        msg=Message("Wysłano test", "Twój wynik to "+str(result.percent) + "%")
+        map['msg'] = msg
+        return render_to_response('main.html', map)
     except Course.DoesNotExist:
         return render_to_response('main.html', map)
 
