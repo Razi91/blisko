@@ -106,6 +106,9 @@ class Course(models.Model):
     def is_owned(self):
         return self.owned
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         db_table = "Course"
 
@@ -132,6 +135,9 @@ class CourseAccess(models.Model):
     class Meta:
         db_table = "CourseAccess"
 
+    def __str__(self):
+        return self.user.login+"-"+self.course.name
+
 
 class Lesson(models.Model):
     name = models.CharField(max_length=40)
@@ -140,6 +146,9 @@ class Lesson(models.Model):
 
     class Meta:
         db_table = "Lesson"
+
+    def __str__(self):
+        return self.name
 
 
 class Test(models.Model):
@@ -202,6 +211,9 @@ class Test(models.Model):
         """
         pass
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         db_table = "Test"
 
@@ -256,6 +268,9 @@ class Question(models.Model):
                 v += 1
         return v
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         db_table = "Question"
 
@@ -269,6 +284,9 @@ class Answer(models.Model):
     def is_correct(self, ans):
         return ans == self.correct
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         db_table = "Answer"
 
@@ -278,6 +296,9 @@ class OpenAnswer(models.Model):
     question = models.ForeignKey(Question)
     sesid = models.IntegerField()
     points = models.IntegerField(default=-1)
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         db_table = "OpenAnswer"
@@ -289,6 +310,9 @@ class Result(models.Model):
     percent = models.FloatField()
     user = models.ForeignKey(User)
     test = models.ForeignKey(Test)
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         db_table = "Result"
@@ -311,6 +335,9 @@ class Activity(models.Model):
     activityid = models.IntegerField()
     ipv4 = models.IntegerField()
     type = models.CharField(max_length=2, choices=ACTIVITY_TYPE, default=UNKNOWN)
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         db_table = "Activity"
