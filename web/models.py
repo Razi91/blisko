@@ -269,7 +269,7 @@ class Question(models.Model):
         return v
 
     def __str__(self):
-        return self.name
+        return self.test.course.name[:20]+":"+self.test.name+":"+self.content[:20]
 
     class Meta:
         db_table = "Question"
@@ -285,7 +285,7 @@ class Answer(models.Model):
         return ans == self.correct
 
     def __str__(self):
-        return self.name
+        return self.question.content[:20]+": "+self.text[:20]
 
     class Meta:
         db_table = "Answer"
@@ -312,7 +312,7 @@ class Result(models.Model):
     test = models.ForeignKey(Test)
 
     def __str__(self):
-        return self.name
+        return self.test.name + ": "+self.user.login + ": "+ str(self.percent)
 
     class Meta:
         db_table = "Result"
@@ -349,6 +349,8 @@ class Comment(models.Model):
     date = models.DateTimeField()
     content = models.TextField(max_length=500, blank=False)
     visibility = models.TextField()
+    def __str__(self):
+        return self.user.login + ": " + self.course.name + ": "+ self.content[:20]
     class Meta:
         db_table = "Comment"
 
