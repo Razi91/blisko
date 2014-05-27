@@ -152,7 +152,11 @@ class Test(models.Model):
     parsedQuestions = []
 
     def questions(self):
-        return Question.objects.filter(test=self)
+        try:
+            return self.__questions
+        except:
+            self.__questions = Question.objects.filter(test=self).order_by('?')
+            return self.__questions
 
     def for_user(self, user):
         self.__done = Result.objects.filter(test=self, user=user).count() > 0

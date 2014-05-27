@@ -195,7 +195,7 @@ def kup(request: HttpRequest, id):
     user=map['user']
     try:
         course = Course.objects.get(id=id)
-        if CourseAccess.objects.filter(user=uesr, course=course).count()>0:
+        if CourseAccess.objects.filter(user=user, course=course).count()>0:
             return main(request)
         user.credits -= course.cost
         acc = CourseAccess()
