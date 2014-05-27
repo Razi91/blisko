@@ -82,8 +82,8 @@
 
             {% include "panele/inf_global.html" %}
             {% if user.is_logged %}
-                {% include "panele/dost_kursy.html" %}
                 {% include "panele/inf_konto.html" %}
+            {% include "panele/dost_kursy.html" %}
             {% else %}
                 {% include "panele/login.html" %}
             {% endif %}

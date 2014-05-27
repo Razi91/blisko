@@ -13,7 +13,12 @@
     <ul id="lessons">
         {% for lesson in course.lessons %}
                 <li>
+
+                    {% if course.owned %}
                     <a href="/lekcja/{{ lesson.id }}">{{ lesson.name }}</a>
+                    {% else %}
+                    {{ lesson.name }}
+                    {% endif %}
                 </li>
         {% empty %}
             <p>Brak lekcji w tym kursie</p>
@@ -27,7 +32,11 @@
                     {% if test.is_done %}
                         <span id="result">{{ test.result }}%</span>
                     {% endif %}
-                    <a href="/test/{{ test.id }}">{{ test.name }}</a>
+                    {% if course.owned %}
+                        <a href="/test/{{ test.id }}">{{ test.name }}</a>
+                    {% else %}
+                    {{ test.name }}
+                    {% endif %}
                 </li>
         {% empty %}
             <p>Brak testów w tym kursie</p>

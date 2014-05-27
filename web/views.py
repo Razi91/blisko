@@ -45,8 +45,10 @@ def get(request: HttpRequest):
         "tests": Test.objects.all().count(),
         "users": User.objects.all().count()
     }
+    map['owned_courses'] = CourseAccess.objects.filter(user=map['user'])
     map['platform'] = platform
     return map
+
 
 
 def login(request: HttpRequest):
@@ -151,6 +153,8 @@ def kursWyslij(request: HttpRequest, id):
         map['course'] = course
         user = map['user']
         course.for_user(map['user'], True)
+        if not course.is_owned():
+            return login(request)
         testid = request.POST.get("test", -1)
         if testid == -1:
             raise Course.DoesNotExist
@@ -179,6 +183,8 @@ def kup(request: HttpRequest, id):
     user=map['user']
     try:
         course = Course.objects.get(id=id)
+        if CourseAccess.objects.filter(user=uesr, course=course).count()>0:
+            return main(request)
         user.credits -= course.cost
         acc = CourseAccess()
         acc.user = user
@@ -186,12 +192,15 @@ def kup(request: HttpRequest, id):
         acc.date = datetime.datetime.now()
         acc.save()
         user.save()
+        msg = messages.Message("Kurs zakupiony!", "Możesz teraz przeglądać lekcje i wykonywać testy", [])
+        map['msg'] = msg
         #TODO: przypisanie kursu do użytkownika
+        return render_to_response('main.html', map)
     except Course.DoesNotExist:
         map = get(request)
-        msg = messages.Message("Błąd", "Kurs nie istnieje", [ActionBack()])
-        map['msg'] = msg
-        return render_to_response('courses_list.html', map)
+        #msg = messages.Message("Błąd", "Kurs nie istnieje", [ActionBack()])
+        #map['msg'] = msg
+        #return render_to_response('courses_list.html', map)
     return render_to_response('courses_list.html', map)
 
 
@@ -201,6 +210,9 @@ def lekcja(request: HttpRequest, id):
     try:
         map = get(request)
         lesson = Lesson.objects.get(id = id)
+        lesson.course.for_user(map['user'])
+        if not lesson.course.is_owned():
+            return login(request)
         map['lesson'] = lesson
         return render_to_response('lesson.html', map)
     except Lesson.DoesNotExist:
@@ -226,6 +238,9 @@ def test(request, id):
     #TODO: sprawdzić, czy użytkownik nie ogląda jakiejś lekcji
     map = get(request)
     test = Test.objects.all().filter(id=id)[0]
+    test.course.for_user(map['user'])
+    if not test.course.is_owned():
+            return login(request)
     map['styles'] = ["test"]
     #test.is_available_for_user(user)
     map['test'] = test
