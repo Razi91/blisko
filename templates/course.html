@@ -48,21 +48,20 @@
             <div id="author">
                 {{ comment.user.login }}:
             </div>
-            <div id="content">
-                {{ comment.content }}
-            </div>
+
             <div id="date">
                 {{ comment.date }}
             </div>
+            <div id="content">
+                {{ comment.content }}
+            </div>
             <div id="foot"></div>
         </div>
-        <hr/>
     {% endfor %}
     {% if user.is_logged %}
         <div id="form">
             <form action="/kurs/{{ course.id }}/" method="post">{% csrf_token %}
                 Skomentuj: <input name="content"/>
-                <br/>
                 <input type="submit" value="Skomentuj"/>
             </form>
         </div>
