@@ -332,7 +332,10 @@ html>body #footer {
 
 #comment {
     display: block;
-    border-bottom: gray 1px solid;
+}
+
+#comment:nth-child(odd) {
+    background: #eee;
 }
 
 #comment #author{

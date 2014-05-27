@@ -9,6 +9,7 @@ from Blisko import settings
 import json
 from django.db import transaction
 
+kursy = ["JSON", "Canvas"]
 
 def install_basic():
     """
@@ -92,6 +93,5 @@ def install_tests():
     Instalacja kursów
     """
     with transaction.atomic():
-        kursy = ["JSON", "Canvas"]
         for kurs in kursy:
             install_course(kurs)
