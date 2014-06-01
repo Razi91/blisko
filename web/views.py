@@ -156,8 +156,13 @@ def cert(request: HttpRequest, id):
     id = int(id)
     map = get(request)
     try:
-        map['course']=Course.objects.get(id=id)
-        return render_to_response('cert.html', map)
+        course = Course.objects.get(id=id)
+        course.for_user(map['user'])
+        if course.finished():
+            map['course'] = course
+            return render_to_response('cert.html', map)
+        else:
+            raise "brak praw"
     except:
         return render_to_response('main.html', map)
 
@@ -167,6 +172,9 @@ def kurs(request: HttpRequest, id):
     map = get(request)
     try:
         course = Course.objects.get(id=id)
+        course.for_user(map['user'])
+        if not course.is_owned():
+            return login(request)
         if request.method == 'POST':
             content = request.POST.get("content", "")
             if len(content) > 3:
@@ -236,7 +244,6 @@ def kursWyslij(request: HttpRequest, id):
                     user.save()
                 except:
                     import sys
-
                     print(sys.exc_info()[0])
                     pass
             course.for_user(map['user'], True)
@@ -264,7 +271,6 @@ def kup(request: HttpRequest, id):
         msg = messages.Message("Kurs zakupiony!", "Możesz teraz przeglądać lekcje i wykonywać testy",
                                [action, ActionBack()])
         map['msg'] = msg
-        #TODO: przypisanie kursu do użytkownika
         return render_to_response('boxonly.html', map)
     except Course.DoesNotExist:
         map = get(request)
@@ -303,8 +309,6 @@ def test(request, id):
     """
         Wykonanie testu
     """
-    #TODO: sprawdzić, czy użytkownik ma prawo do tego testu
-    #TODO: sprawdzić, czy użytkownik nie ogląda jakiejś lekcji
     map = get(request)
     test = Test.objects.all().filter(id=id)[0]
     test.course.for_user(map['user'])
