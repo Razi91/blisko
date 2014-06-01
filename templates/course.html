@@ -7,7 +7,6 @@
     <h1>{{ course.title }}</h1>
     <div style="text-align: center;">
     {% if course.can_buy %}
-
         <a href="/kup/{{ course.id }}/{{ course.title }}"
            style="font-size: 16pt;">»Kup«</a> <br/><br/>
     {% elif course.finished %}
@@ -15,8 +14,11 @@
            style="font-size: 16pt;">»Certyfikat«</a> <br/><br/>
     {% elif course.owned %}
     {% else %}
-        <a href="/doladuj"
+        {% if user.is_logged %}
+        <a href="/doladuj/"
            style="font-size: 16pt;">»Doładuj«</a> swoje konto aby kupić <br/><br/>
+        {% else %}
+        {% endif %}
     {% endif %}
     </div>
     <div id="description">

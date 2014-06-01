@@ -20,6 +20,7 @@
                 <strong>{{ course.cost }}</strong> kredytów
             </div>
             <div id="action">
+            {% if user.is_logged %}
                 {% if course.can_buy %}
                     <a href="/kup/{{ course.id }}/{{ course.title }}"
                             style="font-size: 16pt;">»Kup«</a>
@@ -28,6 +29,9 @@
                 {% else %}
                     Doładuj swoje konto
                 {% endif %}
+            {% else %}
+                Zaloguj się
+            {% endif %}
             </div>
             <div id="foot"></div>
         </div>

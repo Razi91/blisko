@@ -11,6 +11,7 @@ from web.models import *
 from web import utils
 from web import messages
 from web import tester
+import re
 import datetime
 
 import uuid
@@ -50,7 +51,6 @@ def get(request: HttpRequest):
     return map
 
 
-
 def login(request: HttpRequest):
     if request.method == 'POST':
         login = request.POST.get('login', "")
@@ -78,6 +78,7 @@ def login(request: HttpRequest):
     map = get(request)
     return render_to_response('main.html', map)
 
+
 def logout(request: HttpRequest):
     request.session['user'] = 0
     map = get(request)
@@ -85,16 +86,44 @@ def logout(request: HttpRequest):
     map['msg'] = msg
     return render_to_response('main.html', map)
 
+
+def doladuj(request: HttpRequest):
+    request.session['user'] = 0
+    map = get(request)
+    return render_to_response('doladuj.html', map)
+
+
 def register(request: HttpRequest):
     if request.method == 'POST':
-        login = request.POST.get('login', -1)
+        login = request.POST.get('login', "")
         password1 = request.POST.get('pass1', -1)
         password2 = request.POST.get('pass2', -1)
-        email = request.POST.get('email', -1)
-        if password1 == password2:
+        realname = request.POST.get('realname', "")
+        email = request.POST.get('email', "")
+        map = get(request)
+        map['login'] = login
+        map['email'] = email
+        map['realname'] = realname
+        if password1 != password2:
+            msg = messages.Message("Hasła nie zgadzają się!", [])
+            map['msg'] = msg
+        elif len(password1) < 4:
+            msg = messages.Message("Twoje hasło jest za krótkie!", [])
+            map['msg'] = msg
+        elif not re.match(r"^[A-Za-z0-9\.\+_-]+@[A-Za-z0-9\._-]+\.[a-zA-Z]*$", email):
+            msg = messages.Message("Wprowadź poprawnie adres email", [])
+            map['msg'] = msg
+        else:
+            msg = messages.Message("Błąd!", "Rejestracja nie powiodła się, sprawdź wprowadzone dane.", [])
+            map = get(request)
+            map['msg'] = msg
+            map['login'] = login
+            map['email'] = email
+            map['realname'] = realname
             user = User()
             user.login = login
             user.email = email
+            user.real_name = realname
             print(password1)
             user.password = utils.hash_password(password1)
             print(user.password)
@@ -103,18 +132,8 @@ def register(request: HttpRequest):
             user.save()
             map = get(request)
             return render_to_response('main.html', map)
-        elif len(password1) < 5:
-            msg = messages.Message("Twoje hasło jest za krótkie!", [])
-            map['msg'] = msg
-        else:
-            msg = messages.Message("Błąd!", "Rejestracja nie powiodła się, sprawdź wprowadzone dane.", [])
-            map = get(request)
-            map['msg'] = msg
-            map['login'] = login
-            map['email'] = email
-            return render_to_response('register.html', map)
-        pass
-    map = get(request)
+    else:
+        map = get(request)
     return render_to_response('register.html', map)
 
 
@@ -133,6 +152,16 @@ def kursy(request: HttpRequest):
     return render_to_response('courses_list.html', map)
 
 
+def cert(request: HttpRequest, id):
+    id = int(id)
+    map = get(request)
+    try:
+        map['course']=Course.objects.get(id=id)
+        return render_to_response('cert.html', map)
+    except:
+        return render_to_response('main.html', map)
+
+
 def kurs(request: HttpRequest, id):
     id = int(id)
     map = get(request)
@@ -140,7 +169,7 @@ def kurs(request: HttpRequest, id):
         course = Course.objects.get(id=id)
         if request.method == 'POST':
             content = request.POST.get("content", "")
-            if len(content)>3:
+            if len(content) > 3:
                 com = Comment()
                 com.user = map['user']
                 com.course = course
@@ -180,7 +209,7 @@ def kursWyslij(request: HttpRequest, id):
         except:
             old_procent = -1
             pass
-        procent = 100.0*pts/max
+        procent = 100.0 * pts / max
         if old_procent < procent:
             result = Result()
             result.user = user
@@ -203,10 +232,11 @@ def kursWyslij(request: HttpRequest, id):
                             raise "not 100%"
                     access.completed = True
                     access.save()
-                    user.credits += course.cost/10
+                    user.credits += course.cost / 10
                     user.save()
                 except:
                     import sys
+
                     print(sys.exc_info()[0])
                     pass
             course.for_user(map['user'], True)
@@ -214,13 +244,14 @@ def kursWyslij(request: HttpRequest, id):
     except Course.DoesNotExist:
         return render_to_response('main.html', map)
 
+
 def kup(request: HttpRequest, id):
     id = int(id)
     map = get(request)
-    user=map['user']
+    user = map['user']
     try:
         course = Course.objects.get(id=id)
-        if CourseAccess.objects.filter(user=user, course=course).count()>0:
+        if CourseAccess.objects.filter(user=user, course=course).count() > 0:
             return main(request)
         user.credits -= course.cost
         acc = CourseAccess()
@@ -230,7 +261,8 @@ def kup(request: HttpRequest, id):
         acc.save()
         user.save()
         action = ActionUrl("/kurs/%d/" % course.id, "Idź do kursu")
-        msg = messages.Message("Kurs zakupiony!", "Możesz teraz przeglądać lekcje i wykonywać testy", [action, ActionBack()])
+        msg = messages.Message("Kurs zakupiony!", "Możesz teraz przeglądać lekcje i wykonywać testy",
+                               [action, ActionBack()])
         map['msg'] = msg
         #TODO: przypisanie kursu do użytkownika
         return render_to_response('boxonly.html', map)
@@ -242,12 +274,11 @@ def kup(request: HttpRequest, id):
     return render_to_response('courses_list.html', map)
 
 
-
 def lekcja(request: HttpRequest, id):
     id = int(id)
     try:
         map = get(request)
-        lesson = Lesson.objects.get(id = id)
+        lesson = Lesson.objects.get(id=id)
         lesson.course.for_user(map['user'])
         if not lesson.course.is_owned():
             return login(request)
@@ -278,16 +309,16 @@ def test(request, id):
     test = Test.objects.all().filter(id=id)[0]
     test.course.for_user(map['user'])
     if not test.course.is_owned():
-            return login(request)
+        return login(request)
     map['styles'] = ["test"]
     #test.is_available_for_user(user)
     map['test'] = test
     return render_to_response('test.html', map)
 
+
 def o_platformie(request: HttpRequest):
     map = get(request)
     return render_to_response('about.html', map)
-
 
 
 #error
