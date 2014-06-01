@@ -121,6 +121,7 @@ class Course(models.Model):
 #     class Meta:
 #         db_table = "Group"
 
+
 class CourseAccess(models.Model):
     """
         Dostęp użytkownika do kursu
@@ -128,6 +129,7 @@ class CourseAccess(models.Model):
     user = models.ForeignKey(User)
     course = models.ForeignKey(Course)
     date = models.DateField()
+    completed = models.BooleanField(default=False)
 
     class Meta:
         db_table = "CourseAccess"
@@ -175,15 +177,6 @@ class Test(models.Model):
         fromJson = True
         pass
 
-    def points(self):
-        """
-            Punkty zdobyte
-        """
-        #if not fromJson: return
-        pts = 0
-        for question in parsedQuestions:
-            pts += question.pts
-        return pts
 
     def done_by_user(self, user):
         """

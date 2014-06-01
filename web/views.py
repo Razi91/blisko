@@ -158,17 +158,38 @@ def kursWyslij(request: HttpRequest, id):
         pts, max = tester.points(request.POST, test)
         msg=Message("Wysłano test", "Twój wynik to "+str(1.0*pts/max) + "%")
         map['msg'] = msg
+        byl = False
+        old_procent = -1
         try:
-            Result.objects.get(user=user, test=test).delete()
+            old = Result.objects.get(user=user, test=test)
+            byl = True
+            old_procent = old.percent
+            old.delete()
         except:
             pass
-        result = Result()
-        result.user = user
-        result.test = test
-        result.date = datetime.datetime.now()
-        result.startdate = datetime.datetime.now()
-        result.percent = 1.0*pts/max
-        result.save()
+        procent = 1.0*pts/max
+        if old_procent < procent:
+            result = Result()
+            result.user = user
+            result.test = test
+            result.date = datetime.datetime.now()
+            result.startdate = datetime.datetime.now()
+            result.percent = procent
+            result.save()
+            access = CourseAccess.objects.get(user=user, course=course)
+            if not access.completed:
+                tests = course.tests().count()
+                ress = Result.objects.all().filter(user=user, course=course)
+                if ress.count() == tests:
+                    full = True
+                    for res in ress:
+                        if res.percent != 1.0:
+                            full = False
+                            break
+                    if full:
+                        access.completed = True
+                        access.save()
+                        user.credits += course.cost/10
         return render_to_response('course.html', map)
     except Course.DoesNotExist:
         return render_to_response('main.html', map)
