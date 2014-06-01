@@ -222,9 +222,9 @@ class Test(models.Model):
         db_table = "Test"
 
 
-class TestAvailability(models.Model):
-    start = models.DateTimeField()
-    end = models.DateTimeField()
+# class TestAvailability(models.Model):
+#     start = models.DateTimeField()
+#     end = models.DateTimeField()
 
 
 import random
@@ -298,17 +298,17 @@ class Answer(models.Model):
         db_table = "Answer"
 
 
-class OpenAnswer(models.Model):
-    user = models.ForeignKey(User)
-    question = models.ForeignKey(Question)
-    sesid = models.IntegerField()
-    points = models.IntegerField(default=-1)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        db_table = "OpenAnswer"
+# class OpenAnswer(models.Model):
+#     user = models.ForeignKey(User)
+#     question = models.ForeignKey(Question)
+#     sesid = models.IntegerField()
+#     points = models.IntegerField(default=-1)
+#
+#     def __str__(self):
+#         return self.name
+#
+#     class Meta:
+#         db_table = "OpenAnswer"
 
 
 class Result(models.Model):
@@ -325,29 +325,29 @@ class Result(models.Model):
         db_table = "Result"
 
 
-class Activity(models.Model):
-    UNKNOWN = "un"
-    OPEN_TEST = "ot"
-    OPEN_LESSON = "ol"
-    CLOSE_TEST = "ct"
-    CLOSE_LESSON = "cl"
-    ACTIVITY_TYPE = (
-        (UNKNOWN, "nieznana"),
-        (OPEN_TEST, "Otwarcie testu"),
-        (CLOSE_TEST, "Zamknięcie testu"),
-        (OPEN_LESSON, "Otwarcie lekcji"),
-        (CLOSE_LESSON, "Zamknięcie lekcji"))
-    user = models.ForeignKey(User)
-    date = models.DateTimeField(auto_now=True)
-    activityid = models.IntegerField()
-    ipv4 = models.IntegerField()
-    type = models.CharField(max_length=2, choices=ACTIVITY_TYPE, default=UNKNOWN)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        db_table = "Activity"
+# class Activity(models.Model):
+#     UNKNOWN = "un"
+#     OPEN_TEST = "ot"
+#     OPEN_LESSON = "ol"
+#     CLOSE_TEST = "ct"
+#     CLOSE_LESSON = "cl"
+#     ACTIVITY_TYPE = (
+#         (UNKNOWN, "nieznana"),
+#         (OPEN_TEST, "Otwarcie testu"),
+#         (CLOSE_TEST, "Zamknięcie testu"),
+#         (OPEN_LESSON, "Otwarcie lekcji"),
+#         (CLOSE_LESSON, "Zamknięcie lekcji"))
+#     user = models.ForeignKey(User)
+#     date = models.DateTimeField(auto_now=True)
+#     activityid = models.IntegerField()
+#     ipv4 = models.IntegerField()
+#     type = models.CharField(max_length=2, choices=ACTIVITY_TYPE, default=UNKNOWN)
+#
+#     def __str__(self):
+#         return self.name
+#
+#     class Meta:
+#         db_table = "Activity"
 
 
 class Comment(models.Model):
