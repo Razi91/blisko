@@ -106,6 +106,9 @@ class Course(models.Model):
     def is_owned(self):
         return self.owned
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         db_table = "Course"
 
@@ -134,6 +137,9 @@ class CourseAccess(models.Model):
     class Meta:
         db_table = "CourseAccess"
 
+    def __str__(self):
+        return self.user.login+"-"+self.course.name
+
 
 class Lesson(models.Model):
     name = models.CharField(max_length=40)
@@ -142,6 +148,9 @@ class Lesson(models.Model):
 
     class Meta:
         db_table = "Lesson"
+
+    def __str__(self):
+        return self.name
 
 
 class Test(models.Model):
@@ -154,7 +163,11 @@ class Test(models.Model):
     parsedQuestions = []
 
     def questions(self):
-        return Question.objects.filter(test=self)
+        try:
+            return self.__questions
+        except:
+            self.__questions = Question.objects.filter(test=self).order_by('?')
+            return self.__questions
 
     def for_user(self, user):
         self.__done = Result.objects.filter(test=self, user=user).count() > 0
@@ -191,6 +204,9 @@ class Test(models.Model):
         """
         pass
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         db_table = "Test"
 
@@ -199,7 +215,7 @@ class TestAvailability(models.Model):
     start = models.DateTimeField()
     end = models.DateTimeField()
 
-
+import random
 class Question(models.Model):
     OPEN = "o"
     CLOSED_ONE = "c"
@@ -216,7 +232,7 @@ class Question(models.Model):
     points = models.IntegerField()
 
     def answers(self):
-        return Answer.objects.filter(question=self)
+        return Answer.objects.filter(question=self).order_by('?')
 
     class Meta:
         db_table = "Question"
@@ -245,6 +261,9 @@ class Question(models.Model):
                 v += 1
         return v
 
+    def __str__(self):
+        return self.test.course.name[:20]+":"+self.test.name+":"+self.content[:20]
+
     class Meta:
         db_table = "Question"
 
@@ -258,6 +277,9 @@ class Answer(models.Model):
     def is_correct(self, ans):
         return ans == self.correct
 
+    def __str__(self):
+        return self.question.content[:20]+": "+self.text[:20]
+
     class Meta:
         db_table = "Answer"
 
@@ -267,6 +289,9 @@ class OpenAnswer(models.Model):
     question = models.ForeignKey(Question)
     sesid = models.IntegerField()
     points = models.IntegerField(default=-1)
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         db_table = "OpenAnswer"
@@ -278,6 +303,9 @@ class Result(models.Model):
     percent = models.FloatField()
     user = models.ForeignKey(User)
     test = models.ForeignKey(Test)
+
+    def __str__(self):
+        return self.test.name + ": "+self.user.login + ": "+ str(self.percent)
 
     class Meta:
         db_table = "Result"
@@ -301,6 +329,9 @@ class Activity(models.Model):
     ipv4 = models.IntegerField()
     type = models.CharField(max_length=2, choices=ACTIVITY_TYPE, default=UNKNOWN)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         db_table = "Activity"
 
@@ -311,7 +342,8 @@ class Comment(models.Model):
     date = models.DateTimeField()
     content = models.TextField(max_length=500, blank=False)
     visibility = models.TextField()
-
+    def __str__(self):
+        return self.user.login + ": " + self.course.name + ": "+ self.content[:20]
     class Meta:
         db_table = "Comment"
 

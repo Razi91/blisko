@@ -45,8 +45,10 @@ def get(request: HttpRequest):
         "tests": Test.objects.all().count(),
         "users": User.objects.all().count()
     }
+    map['owned_courses'] = CourseAccess.objects.filter(user=map['user'])
     map['platform'] = platform
     return map
+
 
 
 def login(request: HttpRequest):
@@ -136,8 +138,20 @@ def kurs(request: HttpRequest, id):
     map = get(request)
     try:
         course = Course.objects.get(id=id)
+        if request.method == 'POST':
+            content = request.POST.get("content", "")
+            if len(content)>3:
+                com = Comment()
+                com.user = map['user']
+                com.course = course
+                com.date = datetime.datetime.now()
+                com.visibility = True
+                com.content = content
+                com.save()
         map['course'] = course
         course.for_user(map['user'], True)
+        comments = Comment.objects.filter(course=course)
+        map['comments'] = comments
         return render_to_response('course.html', map)
     except Course.DoesNotExist:
         return render_to_response('main.html', map)
@@ -151,15 +165,13 @@ def kursWyslij(request: HttpRequest, id):
         map['course'] = course
         user = map['user']
         course.for_user(map['user'], True)
+        if not course.is_owned():
+            return login(request)
         testid = request.POST.get("test", -1)
         if testid == -1:
             raise Course.DoesNotExist
         test = Test.objects.get(id=testid)
         pts, max = tester.points(request.POST, test)
-        msg=Message("Wysłano test", "Twój wynik to "+str(1.0*pts/max) + "%")
-        map['msg'] = msg
-        byl = False
-        old_procent = -1
         try:
             old = Result.objects.get(user=user, test=test)
             byl = True
@@ -176,6 +188,9 @@ def kursWyslij(request: HttpRequest, id):
             result.startdate = datetime.datetime.now()
             result.percent = procent
             result.save()
+            action = ActionUrl("/kurs/%d/" % course.id, "Wróć do kursu")
+            msg=Message("Wysłano test", "Twój wynik to "+str(result.percent) + "%", [action])
+            map['msg'] = msg
             access = CourseAccess.objects.get(user=user, course=course)
             if not access.completed:
                 tests = course.tests().count()
@@ -200,6 +215,8 @@ def kup(request: HttpRequest, id):
     user=map['user']
     try:
         course = Course.objects.get(id=id)
+        if CourseAccess.objects.filter(user=user, course=course).count()>0:
+            return main(request)
         user.credits -= course.cost
         acc = CourseAccess()
         acc.user = user
@@ -207,7 +224,11 @@ def kup(request: HttpRequest, id):
         acc.date = datetime.datetime.now()
         acc.save()
         user.save()
+        action = ActionUrl("/kurs/%d/" % course.id, "Idź do kursu")
+        msg = messages.Message("Kurs zakupiony!", "Możesz teraz przeglądać lekcje i wykonywać testy", [action, ActionBack()])
+        map['msg'] = msg
         #TODO: przypisanie kursu do użytkownika
+        return render_to_response('boxonly.html', map)
     except Course.DoesNotExist:
         map = get(request)
         msg = messages.Message("Błąd", "Kurs nie istnieje", [ActionBack()])
@@ -222,6 +243,9 @@ def lekcja(request: HttpRequest, id):
     try:
         map = get(request)
         lesson = Lesson.objects.get(id = id)
+        lesson.course.for_user(map['user'])
+        if not lesson.course.is_owned():
+            return login(request)
         map['lesson'] = lesson
         return render_to_response('lesson.html', map)
     except Lesson.DoesNotExist:
@@ -247,6 +271,9 @@ def test(request, id):
     #TODO: sprawdzić, czy użytkownik nie ogląda jakiejś lekcji
     map = get(request)
     test = Test.objects.all().filter(id=id)[0]
+    test.course.for_user(map['user'])
+    if not test.course.is_owned():
+            return login(request)
     map['styles'] = ["test"]
     #test.is_available_for_user(user)
     map['test'] = test

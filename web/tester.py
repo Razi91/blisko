@@ -25,5 +25,4 @@ def points(post, test:Test):
                 break
         if c:
             pts+=1
-
     return pts, max

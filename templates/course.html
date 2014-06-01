@@ -13,7 +13,12 @@
     <ul id="lessons">
         {% for lesson in course.lessons %}
                 <li>
+
+                    {% if course.owned %}
                     <a href="/lekcja/{{ lesson.id }}">{{ lesson.name }}</a>
+                    {% else %}
+                    {{ lesson.name }}
+                    {% endif %}
                 </li>
         {% empty %}
             <p>Brak lekcji w tym kursie</p>
@@ -27,24 +32,38 @@
                     {% if test.is_done %}
                         <span id="result">{{ test.result }}%</span>
                     {% endif %}
-                    <a href="/test/{{ test.id }}">{{ test.name }}</a>
+                    {% if course.owned %}
+                        <a href="/test/{{ test.id }}">{{ test.name }}</a>
+                    {% else %}
+                    {{ test.name }}
+                    {% endif %}
                 </li>
         {% empty %}
             <p>Brak testów w tym kursie</p>
         {% endfor %}
     </ul>
-
+    <h2>Komentarze:</h2>
     {% for comment in comments %}
+        <div id="comment">
             <div id="author">
-                {{ comment.user.login }}
+                {{ comment.user.login }}:
             </div>
-            <div id="comment">
-                {{ comment.content }}
-            </div>
+
             <div id="date">
                 {{ comment.date }}
             </div>
-            <div id="footer"></div>
+            <div id="content">
+                {{ comment.content }}
+            </div>
+            <div id="foot"></div>
+        </div>
     {% endfor %}
-
+    {% if user.is_logged %}
+        <div id="form">
+            <form action="/kurs/{{ course.id }}/" method="post">{% csrf_token %}
+                Skomentuj: <input name="content"/>
+                <input type="submit" value="Skomentuj"/>
+            </form>
+        </div>
+    {% endif %}
 {% endblock %}

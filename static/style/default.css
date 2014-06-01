@@ -328,3 +328,28 @@ html>body #footer {
 #legal a {
 	color: #76D424;
 }
+
+
+#comment {
+    display: block;
+}
+
+#comment:nth-child(odd) {
+    background: #eee;
+}
+
+#comment #author{
+    font-weight: bold;
+    display: inline-block;
+    float: left;
+}
+#comment #content {
+    display: inline-block;
+    float: left;
+}
+#comment #date {
+    float: right;
+}
+#comment #foot {
+    clear: both;
+}
