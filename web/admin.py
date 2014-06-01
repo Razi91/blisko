@@ -26,17 +26,17 @@ class AnswerAdmin(admin.ModelAdmin):
     pass
 admin.site.register(Answer, AnswerAdmin)
 
-class OpenAnswerAdmin(admin.ModelAdmin):
-    pass
-admin.site.register(OpenAnswer, OpenAnswerAdmin)
+# class OpenAnswerAdmin(admin.ModelAdmin):
+#     pass
+# admin.site.register(OpenAnswer, OpenAnswerAdmin)
 
 class ResultAdmin(admin.ModelAdmin):
     pass
 admin.site.register(Result, ResultAdmin)
-
-class ActivityAdmin(admin.ModelAdmin):
-    pass
-admin.site.register(Activity, ActivityAdmin)
+#
+# class ActivityAdmin(admin.ModelAdmin):
+#     pass
+# admin.site.register(Activity, ActivityAdmin)
 
 class CommentAdmin(admin.ModelAdmin):
     pass

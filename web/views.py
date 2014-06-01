@@ -173,8 +173,8 @@ def kurs(request: HttpRequest, id):
     try:
         course = Course.objects.get(id=id)
         course.for_user(map['user'])
-        if not course.is_owned():
-            return login(request)
+        #if not course.is_owned():
+        #    return login(request)
         if request.method == 'POST':
             content = request.POST.get("content", "")
             if len(content) > 3:
