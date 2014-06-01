@@ -6,7 +6,7 @@ from django.db import models
 from django.template import Context, Template
 #from settings import *
 from django.shortcuts import render_to_response
-from web.messages import ActionBack, Message
+from web.messages import *
 from web.models import *
 from web import utils
 from web import messages
@@ -45,7 +45,7 @@ def get(request: HttpRequest):
         "tests": Test.objects.all().count(),
         "users": User.objects.all().count()
     }
-    map['owned_courses'] = CourseAccess.objects.filter(user=map['user'])
+    map['owned_courses'] = CourseAccess.objects.all().filter(user=map['user'])
     map['platform'] = platform
     return map
 
@@ -178,8 +178,9 @@ def kursWyslij(request: HttpRequest, id):
             old_procent = old.percent
             old.delete()
         except:
+            old_procent = -1
             pass
-        procent = 1.0*pts/max
+        procent = 100.0*pts/max
         if old_procent < procent:
             result = Result()
             result.user = user
@@ -189,22 +190,26 @@ def kursWyslij(request: HttpRequest, id):
             result.percent = procent
             result.save()
             action = ActionUrl("/kurs/%d/" % course.id, "Wróć do kursu")
-            msg=Message("Wysłano test", "Twój wynik to "+str(result.percent) + "%", [action])
-            map['msg'] = msg
+            #msg=Message("Wysłano test", "Twój wynik to "+str(result.percent) + "%", [action])
+            #map['msg'] = msg
             access = CourseAccess.objects.get(user=user, course=course)
             if not access.completed:
-                tests = course.tests().count()
-                ress = Result.objects.all().filter(user=user, course=course)
-                if ress.count() == tests:
-                    full = True
-                    for res in ress:
-                        if res.percent != 1.0:
-                            full = False
-                            break
-                    if full:
-                        access.completed = True
-                        access.save()
-                        user.credits += course.cost/10
+                tests = course.tests()
+                try:
+                    for test in tests:
+                        res = Result.objects.get(user=user, test=test)
+                        if res.percent != 100:
+                            print("nie 100%")
+                            raise "not 100%"
+                    access.completed = True
+                    access.save()
+                    user.credits += course.cost/10
+                    user.save()
+                except:
+                    import sys
+                    print(sys.exc_info()[0])
+                    pass
+            course.for_user(map['user'], True)
         return render_to_response('course.html', map)
     except Course.DoesNotExist:
         return render_to_response('main.html', map)

@@ -2,7 +2,7 @@
     <h2><b>Kursy:</b></h2>
     <ul>
         {% for c in owned_courses %}
-        <li><a href="/kurs/{{ course.id }}">{{ c.course.name }}</a></li>
+        <li><a href="/kurs/{{ c.course.id }}">{{ c.course.name }}</a></li>
         {% empty %}
         <li>Brak kupionych kursów</li>
         {%  endfor %}
