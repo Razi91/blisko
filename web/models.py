@@ -93,12 +93,23 @@ class Course(models.Model):
             self.__tests = Test.objects.filter(course=self)
             return self.__tests
 
+
     def for_user(self, user, tests=False):
         self.owned = CourseAccess.objects.filter(course=self, user=user).count() >= 1
         self.__can_buy = self.cost <= user.credits and not self.owned
+        try:
+            self.__finished = CourseAccess.objects.get(user=user,course=self).completed == True
+        except:
+            self.__finished = False
         if tests:
             for test in self.tests():
                 test.for_user(user)
+
+    def finished(self):
+        try:
+            return self.__finished
+        except:
+            return False
 
     def can_buy(self):
         return self.__can_buy
@@ -138,7 +149,7 @@ class CourseAccess(models.Model):
         db_table = "CourseAccess"
 
     def __str__(self):
-        return self.user.login+"-"+self.course.name
+        return self.user.login + "-" + self.course.name
 
 
 class Lesson(models.Model):
@@ -215,7 +226,10 @@ class TestAvailability(models.Model):
     start = models.DateTimeField()
     end = models.DateTimeField()
 
+
 import random
+
+
 class Question(models.Model):
     OPEN = "o"
     CLOSED_ONE = "c"
@@ -262,7 +276,7 @@ class Question(models.Model):
         return v
 
     def __str__(self):
-        return self.test.course.name[:20]+":"+self.test.name+":"+self.content[:20]
+        return self.test.course.name[:20] + ":" + self.test.name + ":" + self.content[:20]
 
     class Meta:
         db_table = "Question"
@@ -278,7 +292,7 @@ class Answer(models.Model):
         return ans == self.correct
 
     def __str__(self):
-        return self.question.content[:20]+": "+self.text[:20]
+        return self.question.content[:20] + ": " + self.text[:20]
 
     class Meta:
         db_table = "Answer"
@@ -305,7 +319,7 @@ class Result(models.Model):
     test = models.ForeignKey(Test)
 
     def __str__(self):
-        return self.test.name + ": "+self.user.login + ": "+ str(self.percent)
+        return self.test.name + ": " + self.user.login + ": " + str(self.percent)
 
     class Meta:
         db_table = "Result"
@@ -342,8 +356,10 @@ class Comment(models.Model):
     date = models.DateTimeField()
     content = models.TextField(max_length=500, blank=False)
     visibility = models.TextField()
+
     def __str__(self):
-        return self.user.login + ": " + self.course.name + ": "+ self.content[:20]
+        return self.user.login + ": " + self.course.name + ": " + self.content[:20]
+
     class Meta:
         db_table = "Comment"
 

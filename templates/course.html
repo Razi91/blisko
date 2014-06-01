@@ -5,6 +5,20 @@
 
 {% block content %}
     <h1>{{ course.title }}</h1>
+    <div style="text-align: center;">
+    {% if course.can_buy %}
+
+        <a href="/kup/{{ course.id }}/{{ course.title }}"
+           style="font-size: 16pt;">»Kup«</a> <br/><br/>
+    {% elif course.finished %}
+        <a href="/certyfikat/{{ course.id }}/{{ course.title }}"
+           style="font-size: 16pt;">»Certyfikat«</a> <br/><br/>
+    {% elif course.owned %}
+    {% else %}
+        <a href="/doladuj"
+           style="font-size: 16pt;">»Doładuj«</a> swoje konto aby kupić <br/><br/>
+    {% endif %}
+    </div>
     <div id="description">
         {{ course.long }}
     </div>
@@ -12,14 +26,14 @@
     <h2>Lekcje</h2>
     <ul id="lessons">
         {% for lesson in course.lessons %}
-                <li>
+            <li>
 
-                    {% if course.owned %}
+                {% if course.owned %}
                     <a href="/lekcja/{{ lesson.id }}">{{ lesson.name }}</a>
-                    {% else %}
+                {% else %}
                     {{ lesson.name }}
-                    {% endif %}
-                </li>
+                {% endif %}
+            </li>
         {% empty %}
             <p>Brak lekcji w tym kursie</p>
         {% endfor %}
@@ -28,16 +42,16 @@
     <h2>Testy</h2>
     <ul id="tests">
         {% for test in course.tests %}
-                <li>
-                    {% if test.is_done %}
-                        <span id="result">{{ test.result }}%</span>
-                    {% endif %}
-                    {% if course.owned %}
-                        <a href="/test/{{ test.id }}">{{ test.name }}</a>
-                    {% else %}
+            <li>
+                {% if test.is_done %}
+                    <span id="result">{{ test.result }}%</span>
+                {% endif %}
+                {% if course.owned %}
+                    <a href="/test/{{ test.id }}">{{ test.name }}</a>
+                {% else %}
                     {{ test.name }}
-                    {% endif %}
-                </li>
+                {% endif %}
+            </li>
         {% empty %}
             <p>Brak testów w tym kursie</p>
         {% endfor %}

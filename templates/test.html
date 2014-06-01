@@ -8,7 +8,7 @@
         <input type="hidden" name="test" value="{{ test.id }}"/>
         {% for question in test.questions %}
             <div class="questionBox">
-                <div class="question">{{ question.content }}</div>
+                <div class="question">{{ question.content|safe }}</div>
                 <ul>
                     {% for ans in question.answers %}
                         <li>

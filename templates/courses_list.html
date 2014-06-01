@@ -21,7 +21,8 @@
             </div>
             <div id="action">
                 {% if course.can_buy %}
-                    <a href="/kup/{{ course.id }}/{{ course.title }}">Kup</a>
+                    <a href="/kup/{{ course.id }}/{{ course.title }}"
+                            style="font-size: 16pt;">»Kup«</a>
                 {% elif course.owned %}
                     Już posiadasz
                 {% else %}
