@@ -1,8 +1,7 @@
 #Blisko Academy
+Projekt grupowy na zaliczenie przedmiotu
 
 System prowadzenia szkoleń w stylu e-learningowym
-
-
 
 ##Instalacja
 
